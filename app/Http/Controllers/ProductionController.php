@@ -29,7 +29,7 @@ class ProductionController extends Controller
     public function index()
     {
 
-          $production =DB::table('productions')
+        $production =DB::table('productions')
         ->select('productions.*')
         ->groupBy('unique_id')
         ->get();
@@ -43,7 +43,7 @@ class ProductionController extends Controller
      */
     public function create()
     {
-           $orderdata = DB::table('order_products')
+        $orderdata = DB::table('order_products')
          ->join('orders', 'orders.id', '=', 'order_products.order_id')
          ->join('products', 'products.id', '=', 'order_products.product_id')
          ->select('order_products.*', 'orders.code', 'products.id','products.name','orders.id')
@@ -67,6 +67,7 @@ class ProductionController extends Controller
     public function store(Request $request)
     {
         $postData = $_POST;
+        //dd($postData);
         if(!empty($postData['order_id']) && $postData['to_be_produced'] !=0)
         {
             $time = time();
@@ -74,21 +75,32 @@ class ProductionController extends Controller
             foreach($postData['order_id'] as $key => $order_id){
                 if($postData['to_be_produced'][$key]){
                     $data[] = [
-                    'order_id' => $order_id,
-                    'product_id' => $postData['product_id'][$key],
-                    'quantity' => $postData['quantity'][$key],
-                    'to_be_produced' => $postData['to_be_produced'][$key],
-                    'unique_id' => $time
-                ];
-                   $remainingquantitys=$postData['remainingquantity'][$key]-$postData['to_be_produced'][$key];
+                        'order_id' => $order_id,
+                        'product_id' => $postData['product_id'][$key],
+                        //'quantity' => $postData['quantity'][$key],
+                        'to_be_produced' => $postData['to_be_produced'][$key],
+                        'unique_id' => $time
+                    ];
+                    $remainingquantitys=$postData['remainingquantity'][$key]-$postData['to_be_produced'][$key];
 
-                 DB::table('order_products')
-                ->where('order_id', $order_id)
-                ->update(['remaining_quantity' =>$remainingquantitys]);
+                    DB::table('order_products')
+                        ->where('order_id', $order_id)
+                        ->update(['remaining_quantity' =>$remainingquantitys]);
                 }
             }
             Production::insert($data);
 
+            if(!empty($postData['order_id']) && $postData['to_be_produced'] !=0) {
+                foreach($postData['order_id'] as $key => $order_id){
+                    if($postData['to_be_produced'][$key]){
+                        $product_id = $postData['product_id'][$key];
+                        $production = Production::whereRaw("order_id = $order_id AND product_id = $product_id")->first();
+                        $production->remaining_quantity -= $postData['to_be_produced'][$key];
+                        $production->save();
+
+                    }
+                }
+            }
         }
 
         return redirect('/home/production')->with('success', 'Production saved!');
