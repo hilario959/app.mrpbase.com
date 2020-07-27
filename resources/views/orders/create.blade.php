@@ -17,11 +17,7 @@
                     </div><br />
                     @endif
                     <form method="post" action="{{ route('order.store') }}">
-                        @csrf
-                        <div class="form-group">    
-                            <label for="code">{{ __('Code') }}</label>
-                            <input type="text" class="form-control" name="code"/>
-                        </div>          
+                        @csrf          
                         <div class="form-group">
                             <label for="client_id">{{ __('Client') }}</label>
                             <select class="advance-select-box form-control @error('client') is-invalid @enderror" id="client_id" name="client_id" required>

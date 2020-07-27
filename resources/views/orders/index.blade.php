@@ -12,13 +12,13 @@
             <h3 class="my-3">{{ __('Orders') }}</h3>
             <a class="btn btn-link float-right" href="{{ route('order.create') }}">{{ __('Add Order') }}</a>
             <div class="table-responsive">
-                <table class="table table-light table-striped border rounded">
+                <table id="tabulator" class="table table-light table-striped border rounded">
                     <thead>
                         <tr>
-                            <td>{{ __('Code') }}</td>
-                            <td>{{ __('Client') }}</td>
-                            <td>{{ __('Delivery date') }}</td>
-                            <td colspan = 2>Actions</td> 
+                            <th tabulator-headerFilter="true">{{ __('Code') }}</th>
+                            <th tabulator-headerFilter="true">{{ __('Client') }}</th>
+                            <th tabulator-headerFilter="true">{{ __('Delivery date') }}</th>
+                            <th colspan = 2 tabulator-formatter="html">Actions</th> 
                         </tr>
                     </thead>
                     <tbody>

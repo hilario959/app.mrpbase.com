@@ -12,14 +12,14 @@
             <h3 class="my-3">{{ __('Clients') }}</h3>
             <a class="btn btn-link float-right" href="{{ route('client.create') }}">{{ __('Add Client') }}</a>
             <div class="table-responsive">
-                <table class="table table-light table-striped border rounded">
+                <table id="tabulator" class="table table-light table-striped border rounded">
                     <thead>
                         <tr>
-                            <td>{{ __('Name') }}</td>
-                            <td>{{ __('Company') }}</td>
-                            <td>{{ __('Number') }}</td>
-                            <td>{{ __('Email') }}</td>
-                            <td colspan = 2>Actions</td>
+                            <th tabulator-headerFilter="true">{{ __('Name') }}</th>
+                            <th tabulator-headerFilter="true">{{ __('Company') }}</th>
+                            <th tabulator-headerFilter="true">{{ __('Number') }}</th>
+                            <th tabulator-headerFilter="true">{{ __('Email') }}</th>
+                            <th colspan = 2 tabulator-formatter="html">Actions</th>
                         </tr>
                     </thead>
                     <tbody>

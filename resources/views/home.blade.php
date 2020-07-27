@@ -21,3 +21,17 @@
     </div>
 </div>
 @endsection
+
+<script>
+  window.addEventListener("load", function() {  
+  try{
+    var table = new Tabulator("#tabulator", {
+      layout:"fitColumns",
+      movableColumns:true,
+    });
+  }catch(err){
+    console.log(err)
+  }
+  
+},false);
+</script>

@@ -55,13 +55,13 @@
                         </div>
                         <!-- <form method="post" id="dynamic_form"> -->
                             <span id="result"></span>
-                            <table class="table table-bordered table-striped" id="user_table">
+                            <table id="" class="table table-bordered table-striped" id="user_table">
                                 <thead>
                                     <tr>
-                                        <th width="35%">{{ __('Product') }}</th>
-                                        <th width="35%">{{ __('Quantity') }}</th>
-                                        <th width="30%">{{ __('Price') }}</th>
-                                        <th width="30%">{{ __('Actions') }}</th>
+                                        <th tabulator-formatter="html" width="35%">{{ __('Product') }}</th>
+                                        <th tabulator-formatter="html" width="35%">{{ __('Quantity') }}</th>
+                                        <th tabulator-formatter="html" width="30%">{{ __('Price') }}</th>
+                                        <th tabulator-formatter="html" width="30%">{{ __('Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbl_posts_body">

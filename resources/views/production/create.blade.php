@@ -18,12 +18,14 @@
                     @endif
                     <form method="post" action="{{ route('production.store') }}">
                         @csrf 
-                        <table class="table table-striped">
+                        <input type="date" id="production_date" name="production_date" required>
+                        
+                        <table id="">
                             <tr>
-                                <th><label for="code">{{ __('Code') }}</label></th> 
-                                <th><label for="code">{{ __('Product') }}</label></th> 
-                                <th><label for="code">{{ __('Total Quantity') }}</label></th> 
-                                <th><label for="code">{{ __('To be Produced') }}</label></th> 
+                                <th tabulator-formatter="html"><label for="code">{{ __('Code') }}</label></th> 
+                                <th ><label for="code">{{ __('Product') }}</label></th> 
+                                <th><label for="code">{{ __('Remaining Quantity') }}</label></th> 
+                                <th tabulator-formatter="html"><label for="code">{{ __('To be Produced') }}</label></th> 
                             </tr>
                             <?php //$a = 1; ?>
                             @foreach($orderdata as $orderdatas)
@@ -38,10 +40,18 @@
                                 <!-- <input type="text" class="to_be_pro"  /> -->
 
                                 <?php //$a++; ?>                             
-                                <td>{{$orderdatas->code}}</td>
+                                <td>
+                                  <button type="button" class="btn btn-lg btn-default" 
+                                          data-toggle="popover" 
+                                          data-trigger="focus"
+                                          title="{{ $orderdatas->first_name }} {{ $orderdatas->last_name }}" 
+                                          data-content="{{ $orderdatas->delivery_date }}">
+                                          {{$orderdatas->code}}
+                                  </button>
+                                </td>
                                 <td>{{$orderdatas->name}}</td>
-                                <td>{{$orderdatas->quantity}}</td>
-                                <td><input type="text" class="form-control to_be_pro" autocomplete="off" id="to_be_pro_{{$orderdatas->product_id}}_{{$orderdatas->name}}" name="to_be_produced[]"  onkeyup="handleEvt(this, {{$orderdatas->id}},{{$orderdatas->product_id}},{{$orderdatas->quantity}},'{{$orderdatas->name}}', event)" />
+                                <td>{{$orderdatas->remaining_quantity}}</td>
+                                <td><input type="number" min="0" max="{{$orderdatas->remaining_quantity}}" class="form-control to_be_pro" autocomplete="off" id="to_be_pro_{{$orderdatas->product_id}}_{{$orderdatas->name}}" name="to_be_produced[]"  onkeyup="handleEvt(this, {{$orderdatas->id}},{{$orderdatas->product_id}},{{$orderdatas->remaining_quantity}},'{{$orderdatas->name}}', event)" />
                                     <span id="error{{$orderdatas->id}}"></span></td>                                          
                                 </tr>
                                 @endforeach
@@ -66,15 +76,18 @@
                 </tr> 
                 @endforeach
             </table>
+          </div>
         </div>
-    </div>
-</div>
+      </div>
+      
 </div>
 @endsection
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
 <script> 
  var myarray = [];
  function handleEvt(e, oid,pid,qty,pname) {    
+   return false;
     var entryInput = e.value; 
 
     var storeqty=$('#storeqty_'+oid).val(); 
@@ -113,7 +126,15 @@
     }
 
 
-}   
+}
 
+window.addEventListener("load", function() {
+  $(function () {
+    $('[data-toggle="popover"]').popover()
+  })
+  
+},false);
+
+//define some sample data
 
 </script>

@@ -52,12 +52,11 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'code'=>'required',
+            //'code'=>'required',
             'client_id'=>'required',
         ]);        
         
         $order = new Order([
-            'code' => $request->get('code'),
             'client_id' => $request->get('client_id'),
             'status' => $request->get('status'),
             'delivery_date' => $request->get('delivery_date'),
@@ -65,6 +64,10 @@ class OrderController extends Controller
         ]);
         
         $order->save();
+        
+        $order->code = env("PRODUCTS_PREFIX") . $order->id;
+        $order->save();
+
         $data=array();
         for ($i=0;$i<=count($request->product_id)-1;$i++){
             $data['order_id']=$order->id;

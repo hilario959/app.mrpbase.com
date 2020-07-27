@@ -12,12 +12,12 @@
             <h3 class="my-3">{{ __('Production') }}</h3>
             <a class="btn btn-link float-right" href="{{ route('production.create') }}">{{ __('Add Production') }}</a>
             <div class="table-responsive">
-                <table class="table table-light table-striped border rounded">
+                <table id="tabulator" class="table table-light table-striped border rounded">
                     <thead>
                         <tr>
-                            <td>{{ __('ID') }}</td>
-                            <td>{{ __('Created') }}</td>                           
-                            <td colspan = 2>Actions</td>
+                            <th tabulator-headerFilter="true">{{ __('ID') }}</th>
+                            <th tabulator-headerFilter="true">{{ __('Created') }}</th>                           
+                            <th colspan = 2 tabulator-formatter="html">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,3 +44,4 @@
     </div>
 </div>
 @endsection
+
