@@ -22,7 +22,8 @@
     <!--link href="/modules/tabulator-tables/dist/css/bootstrap/tabulator_bootstrap4.min.css" rel="stylesheet"-->
     <!--link href="/modules/tabulator-tables/dist/css/bootstrap/tabulator_bootstrap.min.css" rel="stylesheet"-->
     <!--link href="/modules/tabulator-tables/dist/css/semantic-ui/tabulator_semantic-ui.min.css" rel="stylesheet"-->
-    <link href="/modules/tabulator-tables/dist/css/tabulator_modern.min.css" rel="stylesheet">
+    <!--link href="/modules/tabulator-tables/dist/css/tabulator_modern.min.css" rel="stylesheet"-->
+    <link href="/modules/tabulator-tables/dist/css/tabulator_site.min.css" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="/modules/tabulator-tables/dist/js/tabulator.min.js"></script>
