@@ -24,4 +24,5 @@ Route::resource('/home/client', 'ClientController');
 Route::resource('/home/product', 'ProductController');
 Route::resource('/home/order', 'OrderController');
 Route::resource('/home/production', 'ProductionController');
+Route::get('/home/production/{id}/edit2', 'ProductionController@edit2');
 Route::any('/home/production/view', 'ProductionController@view')->name('view');

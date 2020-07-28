@@ -6,6 +6,9 @@
                 <div class="card-header">{{ __('Product Produced') }}
                     <a class="float-right" href="{{ route('production.index') }}">{{ __('Back') }}</a>
                 </div>
+                <div>
+                  <a href="edit2" class="btn btn-primary btn-sm" style="margin: 10px;">Product View</a>
+                </div>
                     <div class="card-body">
                         @if ($errors->any())
                         <div class="alert alert-danger">
