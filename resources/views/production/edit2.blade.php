@@ -65,7 +65,7 @@
       {
         formatter:hideIcon, 
         align:"center", 
-        title:"", 
+        title:" &nbsp; <i class='fa fa-eye-slash'></i>", 
         headerSort:false, 
         cellClick:function(e, row, formatterParams){
           const id = row.getData().id;
