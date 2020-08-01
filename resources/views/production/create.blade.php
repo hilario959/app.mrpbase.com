@@ -20,7 +20,7 @@
                         @csrf 
                         <input type="date" id="production_date" name="production_date" required>
                         
-                        <table id="">
+                        <table class="table table-striped">
                             <tr>
                                 <th tabulator-formatter="html"><label for="code">{{ __('Code') }}</label></th> 
                                 <th ><label for="code">{{ __('Product') }}</label></th> 
@@ -34,8 +34,8 @@
                                 <input type="hidden" value="{{$orderdatas->product_id}}" name="product_id[]" >
                                 <input type="hidden" value="{{$orderdatas->quantity}}" name="quantity[]" >
                                 <input type="hidden" value="{{$orderdatas->id}}" class="productionid" >
-                                <input type="hidden" value="{{$orderdatas->quantity}}" id="storeqty_{{$orderdatas->id}}" >
-                                <input type="hidden" value="{{$orderdatas->remaining_quantity}}" name="remainingquantity[]" >
+                                <input type="hidden" value="{{$orderdatas->quantity}}" >
+                                <input type="hidden" value="{{$orderdatas->remaining_quantity}}" id="storeqty_{{$orderdatas->id}}" name="remainingquantity[]" >
 
                                 <!-- <input type="text" class="to_be_pro"  /> -->
 
@@ -87,10 +87,10 @@
 <script> 
  var myarray = [];
  function handleEvt(e, oid,pid,qty,pname) {    
-   return false;
-    var entryInput = e.value; 
+   
+    var entryInput = parseInt(e.value); 
 
-    var storeqty=$('#storeqty_'+oid).val(); 
+    var storeqty = parseInt($('#storeqty_'+oid).val());
 
     if(entryInput > storeqty){
         $('#error'+oid).html('<p style="color:red">Input quantity is greater then total quantity</p>');

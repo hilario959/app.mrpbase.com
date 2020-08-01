@@ -24,14 +24,11 @@
 
 <script>
   window.addEventListener("load", function() {  
-  try{
-    var table = new Tabulator("#tabulator", {
-      layout:"fitColumns",
-      movableColumns:true,
-    });
-  }catch(err){
-    console.log(err)
-  }
-  
-},false);
+    if(document.getElementById('tabulator') != null){
+      var table = new Tabulator("#tabulator", {
+        layout:"fitColumns",
+        movableColumns:true,
+      });
+    }  
+  },false);
 </script>
