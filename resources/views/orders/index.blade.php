@@ -18,7 +18,7 @@
                             <th tabulator-headerFilter="true">{{ __('Code') }}</th>
                             <th tabulator-headerFilter="true">{{ __('Client') }}</th>
                             <th tabulator-headerFilter="true">{{ __('Delivery date') }}</th>
-                            <th colspan = 2 tabulator-formatter="html">Actions</th> 
+                            <th tabulator-formatter="html">Actions</th> 
                         </tr>
                     </thead>
                     <tbody>
@@ -28,12 +28,10 @@
                             <td>{{$orders->client->first_name}}</td>
                             <td>{{$orders->delivery_date}}</td>
                             <td>
-                                <a href="{{ route('order.edit',$orders->id)}}" class="btn btn-link">{{ __('Edit') }}</a>
-                            </td>
-                            <td>
-                                <form action="{{ route('order.destroy', $orders->id)}}" method="post">
+                              <form action="{{ route('order.destroy', $orders->id)}}" method="post">
                                 @csrf
                                 @method('DELETE')
+                                <a href="{{ route('order.edit',$orders->id)}}" class="btn btn-link">{{ __('Edit') }}</a>
                                 <button class="btn btn-link" type="submit">{{ __('Delete') }}</button>
                                 </form>
                             </td>

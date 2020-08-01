@@ -18,7 +18,7 @@
                             <th tabulator-headerFilter="true">{{ __('Name') }}</th>
                             <th tabulator-headerFilter="true">{{ __('Code') }}</th>
                             <th tabulator-headerFilter="true">{{ __('Description') }}</th>
-                            <th colspan = 2 tabulator-formatter="html">Actions</th>
+                            <th tabulator-formatter="html">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,14 +28,17 @@
                             <td>{{$products->code}}</td>
                             <td>{{$products->description}}</td>
                             <td>
-                                <a href="{{ route('product.edit',$products->id)}}" class="btn btn-link">{{ __('Edit') }}</a>
-                            </td>
-                            <td>
-                                <form action="{{ route('product.destroy', $products->id)}}" method="post">
+                              <form action="{{ route('product.destroy', $products->id)}}" method="post">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-link" type="submit">{{ __('Delete') }}</button>
-                                </form>
+                                <span>
+                                  <a href="{{ route('product.edit',$products->id)}}" class="btn btn-link">{{ __('Edit') }}</a>
+                                </span>
+                                
+                                <span>                                  
+                                  <button class="btn btn-link" type="submit">{{ __('Delete') }}</button>
+                                </span>
+                              </form>
                             </td>
                         </tr>
                         @endforeach

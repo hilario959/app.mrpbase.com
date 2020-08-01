@@ -19,7 +19,7 @@
                             <th tabulator-headerFilter="true">{{ __('Company') }}</th>
                             <th tabulator-headerFilter="true">{{ __('Number') }}</th>
                             <th tabulator-headerFilter="true">{{ __('Email') }}</th>
-                            <th colspan = 2 tabulator-formatter="html">Actions</th>
+                            <th tabulator-formatter="html">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,13 +30,11 @@
                             <td>{{$clients->number}}</td>
                             <td>{{$clients->email}}</td>
                             <td>
-                                <a href="{{ route('client.edit',$clients->id)}}" class="btn btn-link">{{ __('Edit') }}</a>
-                            </td>
-                            <td>
-                                <form action="{{ route('client.destroy', $clients->id)}}" method="post">
+                              <form action="{{ route('client.destroy', $clients->id)}}" method="post">
                                 @csrf
-                                @method('DELETE')
+                                <a href="{{ route('client.edit',$clients->id)}}" class="btn btn-link">{{ __('Edit') }}</a>
                                 <button class="btn btn-link" type="submit">{{ __('Delete') }}</button>
+                                @method('DELETE')
                                 </form>
                             </td>
                         </tr>
