@@ -35,11 +35,11 @@
                             <div class="form-group">
                                 <label for="status">{{ __('Status') }}</label>
                                 <select class="advance-select-box form-control @error('status') is-invalid @enderror" id="status" name="status" required>
-                                    <option value="" selected disabled>{{ __('Select a Status') }}</option>
-                                    <option value="0">{{ __('Received') }}</option>
-                                    <option value="1">{{ __('Paid') }}</option>
-                                    <option value="2">{{ __('In progress') }}</option>
-                                    <option value="3">{{ __('Done') }}</option>
+                                    <option value="" disabled>{{ __('Select a Status') }}</option>
+                                    <option value="0" @if($order->status == 0) selected @endif>{{ __('Received') }}</option>
+                                    <option value="1" @if($order->status == 1) selected @endif>{{ __('Paid') }}</option>
+                                    <option value="2" @if($order->status == 2) selected @endif>{{ __('In progress') }}</option>
+                                    <option value="3" @if($order->status == 3) selected @endif>{{ __('Done') }}</option>
                                 </select>
                             </div>
                             <div class="form-group">
