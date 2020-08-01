@@ -41,13 +41,10 @@
 
                                 <?php //$a++; ?>                             
                                 <td>
-                                  <button type="button" class="btn btn-lg btn-default" class="orderid"
-                                          data-toggle="popover" 
-                                          data-trigger="focus"
-                                          title="{{ $orderdatas->first_name }} {{ $orderdatas->last_name }}" 
-                                          data-content="{{ $orderdatas->delivery_date }}">
+                                  <span type="button" class="btn btn-lg btn-default" class="orderid"
+                                          title="{{ $orderdatas->first_name }} {{ $orderdatas->last_name }} {{ $orderdatas->delivery_date }}">
                                           {{$orderdatas->code}}
-                                  </button>
+                                </span>
                                 </td>
                                 <td>{{$orderdatas->name}}</td>
                                 <td>{{$orderdatas->remaining_quantity}}</td>
