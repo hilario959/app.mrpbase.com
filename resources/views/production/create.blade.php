@@ -41,7 +41,7 @@
 
                                 <?php //$a++; ?>                             
                                 <td>
-                                  <button type="button" class="btn btn-lg btn-default" 
+                                  <button type="button" class="btn btn-lg btn-default" id="order" 
                                           data-toggle="popover" 
                                           data-trigger="focus"
                                           title="{{ $orderdatas->first_name }} {{ $orderdatas->last_name }}" 
@@ -129,9 +129,8 @@
 }
 
 window.addEventListener("load", function() {
-  $(function () {
+  
     $('[data-toggle="popover"]').popover()
-  })
   
 },false);
 
