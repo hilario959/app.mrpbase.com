@@ -17,7 +17,7 @@
             <tr>
               <th tabulator-headerFilter="true">{{ __('ID') }}</th>
               <th tabulator-headerFilter="true">{{ __('Created') }}</th>
-              <th colspan=2 tabulator-formatter="html">Actions</th>
+              <th tabulator-formatter="html">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -26,13 +26,10 @@
               <td>{{$productions->id}}</td>
               <td>{{$productions->created_at}}</td>
               <td>
-                <a href="{{ route('production.edit',$productions->unique_id)}}"
-                  class="btn btn-link">{{ __('View') }}</a>
-              </td>
-              <td>
                 <form action="{{ route('production.destroy', $productions->unique_id)}}" method="post">
                   @csrf
                   @method('DELETE')
+                  <a href="{{ route('production.edit',$productions->unique_id)}}" class="btn btn-link">{{ __('View') }}</a>
                   <button class="btn btn-link" type="submit">{{ __('Delete') }}</button>
                 </form>
               </td>
