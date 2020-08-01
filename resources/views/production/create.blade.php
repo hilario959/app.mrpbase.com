@@ -41,7 +41,7 @@
 
                                 <?php //$a++; ?>                             
                                 <td>
-                                  <button type="button" class="btn btn-lg btn-default" id="order" 
+                                  <button type="button" class="btn btn-lg btn-default" class="orderid"
                                           data-toggle="popover" 
                                           data-trigger="focus"
                                           title="{{ $orderdatas->first_name }} {{ $orderdatas->last_name }}" 
@@ -83,7 +83,7 @@
 </div>
 @endsection
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script> 
  var myarray = [];
  function handleEvt(e, oid,pid,qty,pname) {    
@@ -133,7 +133,9 @@ window.addEventListener("load", function() {
     $('[data-toggle="popover"]').popover()
   
 },false);
-
+$(document).ready(function(){
+  $('body .orderid').popover()
+})
 //define some sample data
 
 </script>
