@@ -127,12 +127,6 @@
 
 
 }
-
-window.addEventListener("load", function() {
-  
-    $('[data-toggle="popover"]').popover()
-  
-},false);
 $(document).ready(function(){
   $('body .orderid').popover()
 })
