@@ -15,9 +15,10 @@
                 <table id="tabulator" class="table table-light table-striped border rounded">
                     <thead>
                         <tr>
-                            <th tabulator-headerFilter="true">{{ __('Code') }}</th>
-                            <th tabulator-headerFilter="true">{{ __('Client') }}</th>
-                            <th tabulator-headerFilter="true">{{ __('Delivery date') }}</th>
+                            <th >{{ __('Code') }}</th>
+                            <th >{{ __('Client') }}</th>
+                            <th >{{ __('Status') }}</th>
+                            <th >{{ __('Delivery date') }}</th>
                             <th tabulator-formatter="html">Actions</th> 
                         </tr>
                     </thead>
@@ -25,7 +26,21 @@
                         @foreach($order as $orders)
                         <tr>
                             <td>{{$orders->code}}</td>
-                            <td>{{$orders->client->first_name}}</td>
+                            <td>{{$orders->client->first_name}} {{$orders->client->last_name}}</td>
+                            <td>
+                                @if($orders->status == 0) 
+                                    {{ __('Received') }}
+                                @endif
+                                @if($orders->status == 1) 
+                                    {{ __('Paid') }}
+                                @endif
+                                @if($orders->status == 2) 
+                                    {{ __('In Progress') }}
+                                @endif
+                                @if($orders->status == 3) 
+                                    {{ __('Done') }}
+                                @endif
+                            </td>
                             <td>{{$orders->delivery_date}}</td>
                             <td>
                               <form action="{{ route('order.destroy', $orders->id)}}" method="post">

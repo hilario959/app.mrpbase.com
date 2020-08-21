@@ -24,7 +24,7 @@
                                 <input type="text" class="form-control" name="name" value="{{ $product->name }}" />
                             </div>         
                             <div class="form-group">
-                                <label for="code">{{ __('Code') }}</label>
+                                <label for="code">{{ __('SKU') }}</label>
                                 <input type="text" class="form-control" name="code" value="{{ $product->code }}" />
                             </div>          
                             <div class="form-group">

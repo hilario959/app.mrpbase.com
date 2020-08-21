@@ -100,7 +100,7 @@ class ProductController extends Controller
             'code'=>'required',
         ]);        
 
-        $product = Contact::find($id);
+        $product = Product::find($id);
         $product->name =  $request->get('name');
         $product->code = $request->get('code');
         $product->description = $request->get('description');

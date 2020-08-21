@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'mrpbase') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -15,15 +15,12 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/fafad05c14.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <!--link href="/modules/tabulator-tables/dist/css/bootstrap/tabulator_bootstrap4.min.css" rel="stylesheet"-->
-    <!--link href="/modules/tabulator-tables/dist/css/bootstrap/tabulator_bootstrap.min.css" rel="stylesheet"-->
-    <!--link href="/modules/tabulator-tables/dist/css/semantic-ui/tabulator_semantic-ui.min.css" rel="stylesheet"-->
-    <!--link href="/modules/tabulator-tables/dist/css/tabulator_modern.min.css" rel="stylesheet"-->
-    <link href="/modules/tabulator-tables/dist/css/tabulator_site.min.css" rel="stylesheet">
+    <link href="/modules/tabulator-tables/dist/css/bootstrap/tabulator_bootstrap4.min.css" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="/modules/tabulator-tables/dist/js/tabulator.min.js"></script>
@@ -31,11 +28,8 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/home') }}">
-                    {{ config('app.name', 'mrpbase') }}
-                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -43,7 +37,38 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                    @auth
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('home') }}">
+                                <i class="fas fa-tachometer-alt text-primary"></i>
+                                {{ __('Dashboard') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('production.index') }}">
+                                <i class="fas fa-industry text-secondary"></i>
+                                {{ __('Productions') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('order.index') }}">
+                                <i class="fas fa-list text-success"></i>
+                                {{ __('Orders') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('client.index') }}">
+                                <i class="fas fa-users text-info"></i>
+                                {{ __('Clients') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('product.index') }}">
+                                <i class="fas fa-box text-danger"></i>
+                                {{ __('Products') }}
+                            </a>
+                        </li>
+                    @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -59,18 +84,19 @@
                                 </li>
                             @endif
                         @else
-                           <li class="nav-item">
-                                <a class="nav-link" href="{{ route('production.index') }}">{{ __('Production') }}</a>
-                            </li>
-                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('order.index') }}">{{ __('Orders') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('client.index') }}">{{ __('Clients') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('product.index') }}">{{ __('Products') }}</a>
-                            </li>
+                            <div class="btn-group mr-2">
+                              <button class="btn btn-primary py-0 btn-sm" onclick="location.href='{{ url('home/order/create') }}'" type="button">
+                                {{ __('Add Order') }}
+                              </button>
+                              <button type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="sr-only"></span>
+                              </button>
+                              <div class="dropdown-menu dropdown-menu-right">
+                                <button class="dropdown-item" onclick="location.href='{{ url('home/production/create') }}'" type="button">{{ __('Add Production') }}</button>
+                                <button class="dropdown-item" onclick="location.href='{{ url('home/client/create') }}'" type="button">{{ __('Add Client') }}</button>
+                                <button class="dropdown-item" onclick="location.href='{{ url('home/product/create') }}'" type="button">{{ __('Add Product') }}</button>
+                              </div>
+                            </div>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>

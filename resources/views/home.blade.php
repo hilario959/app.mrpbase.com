@@ -28,6 +28,11 @@
       var table = new Tabulator("#tabulator", {
         layout:"fitColumns",
         movableColumns:true,
+        pagination:"local",
+        paginationSize:10,
+        initialSort:[
+          {column:"code", dir:"desc"}, 
+        ]
       });
     }  
   },false);
