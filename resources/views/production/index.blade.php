@@ -15,15 +15,15 @@
         <table id="tabulator" class="table table-light table-striped border rounded">
           <thead>
             <tr>
-              <th tabulator-headerFilter="true">{{ __('ID') }}</th>
-              <th tabulator-headerFilter="true">{{ __('Created') }}</th>
+              <th >{{ __('Code') }}</th>
+              <th >{{ __('Created') }}</th>
               <th tabulator-formatter="html">Actions</th>
             </tr>
           </thead>
           <tbody>
             @foreach($production as $productions)
             <tr>
-              <td>{{$productions->id}}</td>
+              <td>PO-{{$productions->id}}</td>
               <td>{{$productions->created_at}}</td>
               <td>
                 <form action="{{ route('production.destroy', $productions->unique_id)}}" method="post">

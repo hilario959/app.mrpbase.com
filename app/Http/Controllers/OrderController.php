@@ -65,7 +65,7 @@ class OrderController extends Controller
         
         $order->save();
         
-        $order->code = env("PRODUCTS_PREFIX") . $order->id;
+        $order->code = "SO-" . $order->id;
         $order->save();
 
         $data=array();

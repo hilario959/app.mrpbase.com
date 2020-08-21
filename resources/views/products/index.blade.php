@@ -15,9 +15,9 @@
                 <table id="tabulator" class="table table-light table-striped border rounded">
                     <thead>
                         <tr>
-                            <th tabulator-headerFilter="true">{{ __('Name') }}</th>
-                            <th tabulator-headerFilter="true">{{ __('Code') }}</th>
-                            <th tabulator-headerFilter="true">{{ __('Description') }}</th>
+                            <th >{{ __('Name') }}</th>
+                            <th >{{ __('SKU') }}</th>
+                            <th >{{ __('Description') }}</th>
                             <th tabulator-formatter="html">Actions</th>
                         </tr>
                     </thead>

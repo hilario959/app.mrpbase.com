@@ -44,7 +44,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="delivery_date">{{ __('Delivery Date') }}</label>
-                                <input type="text" class="form-control" name="delivery_date" value="{{ $order->delivery_date }}" />
+                                <input type="date" class="form-control" name="delivery_date" value="{{ $order->delivery_date }}" />
                             </div>
                             <div class="form-group">
                                 <label for="notes">{{ __('notes') }}</label>

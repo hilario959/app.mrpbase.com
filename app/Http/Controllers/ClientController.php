@@ -105,7 +105,7 @@ class ClientController extends Controller
             'email'=>'required'
         ]);        
 
-        $client = Contact::find($id);
+        $client = Client::find($id);
         $client->first_name =  $request->get('first_name');
         $client->last_name = $request->get('last_name');
         $client->email = $request->get('email');

@@ -21,35 +21,35 @@
                             @csrf
                             <div class="form-group">    
                                 <label for="first_name">{{ __('First Name') }}</label>
-                                <input type="text" class="form-control" name="first_name" value={{ $client->first_name }} />
+                                <input type="text" class="form-control" name="first_name" value='{{ $client->first_name }}' />
                             </div>         
                             <div class="form-group">
                                 <label for="last_name">{{ __('Last Name') }}</label>
-                                <input type="text" class="form-control" name="last_name" value={{ $client->last_name }} />
+                                <input type="text" class="form-control" name="last_name" value='{{ $client->last_name }}' />
                             </div>          
                             <div class="form-group">
                                 <label for="email">{{ __('Company') }}</label>
-                                <input type="text" class="form-control" name="company" value={{ $client->company }} />
+                                <input type="text" class="form-control" name="company" value='{{ $client->company }}' />
                             </div>
                             <div class="form-group">
                                 <label for="city">{{ __('Email') }}</label>
-                                <input type="text" class="form-control" name="email" value={{ $client->email }} />
+                                <input type="text" class="form-control" name="email" value='{{ $client->email }}' />
                             </div>
                             <div class="form-group">
                                 <label for="city">{{ __('Number') }}</label>
-                                <input type="text" class="form-control" name="number" value={{ $client->number }} />
+                                <input type="text" class="form-control" name="number" value='{{ $client->number }}' />
                             </div>
                             <div class="form-group">
                                 <label for="country">{{ __('Address') }}</label>
-                                <input type="text" class="form-control" name="address" value={{ $client->address }} />
+                                <input type="text" class="form-control" name="address" value='{{ $client->address }}' />
                             </div>
                             <div class="form-group">
                                 <label for="job_title">{{ __('Tax ID') }}</label>
-                                <input type="text" class="form-control" name="tax_id" value={{ $client->tax_id }} />
+                                <input type="text" class="form-control" name="tax_id" value='{{ $client->tax_id }}' />
                             </div>    
                             <div class="form-group">
                                 <label for="job_title">{{ __('Notes') }}</label>
-                                <input type="text" class="form-control" name="notes" value={{ $client->notes }} />
+                                <input type="text" class="form-control" name="notes" value='{{ $client->notes }}' />
                             </div>                      
                             <button type="submit" class="btn btn-link">{{ __('Update client') }}</button>
                         </form>

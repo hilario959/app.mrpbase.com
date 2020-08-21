@@ -80,10 +80,11 @@ class ProductionController extends Controller
       ->get();
     $production = DB::table('order_products')
       ->join('products', 'products.id', '=', 'order_products.product_id')
-      ->select('quantity', 'products.name', DB::raw('SUM(quantity) AS total_qty'))
+      ->select('quantity', 'products.name', 'products.id', DB::raw('SUM(quantity) AS total_qty'))
       ->where('remaining_quantity', '!=', 0)
       ->groupBy('product_id')
       ->get();
+      //dd($production);
     return view('production.create', compact('orderdata', 'production'));
   }
 
@@ -180,9 +181,8 @@ class ProductionController extends Controller
   }
   public function edit2($unique_id)
   {
-    $orders = DB::select(DB::Raw("select o.id, o.code as 'order',  
-                                          concat(c.first_name, ' ', c.last_name) as client_name,
-                                          o.delivery_date as time_delivery
+    $orders = DB::select(DB::Raw("select o.id, o.code as 'order', concat(c.first_name, ' ', c.last_name) as client_name,
+o.delivery_date as time_delivery
                                   from orders o
                                   inner join clients c on o.client_id =c.id
                                   where o.id in (

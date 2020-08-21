@@ -15,10 +15,10 @@
                 <table id="tabulator" class="table table-light table-striped border rounded">
                     <thead>
                         <tr>
-                            <th tabulator-headerFilter="true">{{ __('Name') }}</th>
-                            <th tabulator-headerFilter="true">{{ __('Company') }}</th>
-                            <th tabulator-headerFilter="true">{{ __('Number') }}</th>
-                            <th tabulator-headerFilter="true">{{ __('Email') }}</th>
+                            <th >{{ __('Name') }}</th>
+                            <th >{{ __('Company') }}</th>
+                            <th >{{ __('Number') }}</th>
+                            <th >{{ __('Email') }}</th>
                             <th tabulator-formatter="html">Actions</th>
                         </tr>
                     </thead>
