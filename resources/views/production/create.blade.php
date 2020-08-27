@@ -1,137 +1,127 @@
-@extends('home')@section('content')
-<div class="container">
-<a class="float-right" href="{{ route('production.index') }}">{{ __('Back') }}</a>
-    <div class="row">
-        <div class="col-md-12 form-group">
-            <form>
-                <div class="form-group">
-                    <label for="production_date">{{ __('Production Date') }}</label>
-                    <input type="date" class="form-control" id="production_date" required>
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+@extends('layouts.app')
+
+@section('content')
+    <div class="container">
+        <form method="post" id="productionForm" action="{{ route('production.store') }}">
+            @csrf
+
+            <div class="row">
+                <div class="col-12 row">
+                    <a class="btn btn-lg btn-link" href="{{ route('production.index') }}">< {{ __('Back') }}</a>
                 </div>
-            </form>
-        </div>
+
+                @if ($errors->any())
+                    <div class="alert alert-danger ml-3 col-12">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div><br />
+                @endif
+
+                <div class="col-md-12 form-group">
+                    <div class="row">
+                        <div class="col">
+                            <label for="start_at">{{ __('Start date') }}</label>
+                            <input type="datetime-local" name="start_at" class="form-control" id="start_at" value="{{ old('start_at') }}" required>
+                        </div>
+                        <div class="col">
+                            <label for="end_at">{{ __('End date') }}</label>
+                            <input type="datetime-local" name="end_at" class="form-control" id="end_at" value="{{ old('end_at') }}" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-7">
+                    <table class="table table-light border rounded">
+                        <tr>
+                            <th class="pl-4">{{ __('Code') }}</th>
+                            <th>{{ __('Product') }}</th>
+                            <th>{{ __('Remaining') }}</th>
+                            <th>{{ __('Production') }}</th>
+                        </tr>
+
+                        @foreach($orderData as $k => $item)
+                            <tr>
+                                <td class="align-middle">
+                                    <input type="hidden" name="products[{{ $k }}][product_id]" value="{{ $item->product_id }}">
+                                    <input type="hidden" name="products[{{ $k }}][order_id]" value="{{ $item->order_id }}">
+
+                                    <a href="{{ route('order.edit', ['order' => $item->order_id]) }}" target="_blank" class="btn btn-lg btn-link"
+                                          title="{{ $item->order->client->first_name }} {{ $item->order->client->last_name }} {{ $item->order->delivery_date }}">
+                                        {{ $item->order->code }}
+                                    </a>
+                                </td>
+
+                                <td class="align-middle">
+                                    <a href="{{ route('product.edit', ['product' => $item->product_id]) }}" target="_blank">
+                                        {{ $item->product->name }}
+                                    </a>
+                                </td>
+
+                                <td class="align-middle">
+                                    {{ $item->remaining_quantity }} / {{ $item->quantity }}
+                                </td>
+
+                                <td class="align-middle">
+                                    <input type="number" step="0.1" min="0" max="{{ $item->remaining_quantity }}"
+                                           data-product-id="{{ $item->product->id }}"
+                                           class="form-control productionQuantity" autocomplete="off"
+                                           name="products[{{ $k }}][quantity]" />
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+
+                </div>
+                <div class="col-md-5">
+                    <table class="table table-light border rounded">
+                        <tr>
+                            <th>{{ __('Product') }}</th>
+                            <th>{{ __('Total') }}</th>
+                        </tr>
+                        @foreach($productData as $item)
+                            <tr>
+                                <td class="align-middle">
+                                    {{ $item->product->name }}
+                                </td>
+
+                                <td class="align-middle">
+                                    <input class="total_{{ $item->product->id }} form-control productionQuantityTotal"
+                                           data-product-id="{{ $item->product->id }}" value="0" type="text" readonly>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+
+                    <button class="btn btn-success btn-lg float-right" type="submit" id="submit_btn" >{{ __('Add Production') }}</button>
+                </div>
+            </div>
+        </form>
     </div>
-    <div class="row">
-        <div class="col-md-7">
-            @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div><br />
-            @endif
-            <form method="post" action="{{ route('production.store') }}">
-                @csrf 
-                <table class="table table-light border rounded">
-                    <tr>
-                        <th tabulator-formatter="html"><label for="code">{{ __('Code') }}</label></th> 
-                        <th ><label for="code">{{ __('Product') }}</label></th> 
-                        <th><label for="code">{{ __('Remaining') }}</label></th> 
-                        <th tabulator-formatter="html"><label for="code">{{ __('Production') }}</label></th> 
-                    </tr>
-                    @foreach($orderdata as $orderdatas)
-                    <tr> 
-                        <input type="hidden" value="{{$orderdatas->order_id}}" name="order_id[]" >
-                        <input type="hidden" value="{{$orderdatas->product_id}}" name="product_id[]" >
-                        <input type="hidden" value="{{$orderdatas->quantity}}" name="quantity[]" >
-                        <input type="hidden" value="{{$orderdatas->id}}" class="productionid" >
-                        <input type="hidden" value="{{$orderdatas->quantity}}" >
-                        <input type="hidden" value="{{$orderdatas->remaining_quantity}}" id="storeqty_{{$orderdatas->id}}" name="remainingquantity[]" >
-                        <td>
-                            <span type="button" class="btn btn-lg btn-default" class="orderid" title="{{ $orderdatas->first_name }} {{ $orderdatas->last_name }} {{ $orderdatas->delivery_date }}">
-                                {{$orderdatas->code}}
-                            </span>
-                        </td>
-                        <td>{{$orderdatas->name}}
-                        </td>
-                        <td>{{$orderdatas->remaining_quantity}}</td>
-                        <td>
-                            <input type="number" min="0" max="{{$orderdatas->remaining_quantity}}" class="form-control to_be_pro" autocomplete="off" id="to_be_pro_{{$orderdatas->product_id}}" name="to_be_produced[]"  onkeyup="handleEvt(this, {{$orderdatas->id}},{{$orderdatas->product_id}},{{$orderdatas->remaining_quantity}},'{{$orderdatas->name}}', event)" />
-                            <span id="error{{$orderdatas->id}}"></span>
-                        </td>                                          
-                    </tr>
-                    @endforeach
-                </table>                                              
-                <button class="btn btn-link" type="submit" id="submit_btn" >{{ __('Add Production') }}</button>
-            </form>
-        </div>
-        <div class="col-md-5">
-            <table class="table table-light border rounded">
-                <tr>
-                    <th><label for="code">{{ __('Product') }}</label></th> 
-                    <th><label for="code">{{ __('Total') }}</label></th>
-                </tr>
-                @foreach($production as $productions)
-                <tr>
-                    <td>{{$productions->name}}</td>
-                    <td><input class="total_{{$productions->id}} form-control" type="text" readonly></td>
-                </tr> 
-                @endforeach
-            </table>
-        </div>
-    </div>    
-</div>
 @endsection
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script> 
- var myarray = [];
- function handleEvt(e, oid,pid,qty,pname) {    
-   
-    var entryInput = parseInt(e.value); 
+@push('scripts')
+    <script>
+        $(document).ready(function () {
+             $(document).on('change', '.productionQuantity', function () {
+                 const $input = $(this),
+                     product_id = $(this).data('product-id');
 
-    var storeqty = parseInt($('#storeqty_'+oid).val());
+                 if (!$input.get(0).checkValidity()) {
+                     $input.get(0).reportValidity();
+                     return;
+                 }
 
-    if(entryInput > storeqty){
-        $('#error'+oid).html('<p style="color:red">Input quantity is greater then total quantity</p>');
-        $('#submit_btn').prop('disabled',true);
-    }else{ 
-        $('#submit_btn').prop('disabled',false);
-        $(".to_be_pro").each(function(){
-            $(".total_"+ $(this).attr('id').substr($(this).attr('id').lastIndexOf('_') + 1)).val('');
-            //console.log($(this).attr('id').substr($(this).attr('id').lastIndexOf('_') + 1));
-        }); 
-        
-        $(".to_be_pro").each(function(){ 
-            if(true){ 
-                var oldval = 0;  
-                var newval = 0;
-                var totalval = 0;   
-                var substring = $(this).attr('id').substr($(this).attr('id').lastIndexOf('_') + 1);
-                
-                if($(this).val() != "")
-                { 
-                    oldval = $(this).val();
-                }
+                 let quantity = 0;
+                 $(`.productionQuantity[data-product-id="${product_id}"]`).each(function (i, el) {
+                     quantity += parseFloat($(el).val() || 0);
+                 })
 
-                if($(".total_"+ substring).val() != ""  )
-                {
-                    //+ $(this).attr('id').substr($(this).attr('id').lastIndexOf('_') + 1)).val() !=""
-                    //newval = 0;
-                    newval = $(".total_"+ substring).val();    
-                    console.log(newval+" newval");
-                }
-                totalval=(parseInt(oldval)+ parseInt(newval)); 
-                $(".total_"+ $(this).attr('id').substr($(this).attr('id').lastIndexOf('_') + 1)).val('');
-                $(".total_"+ substring).val(totalval);
-                console.log(totalval+" totalval");
-                console.log(substring);
-            }            
-        });        
-        if(entryInput <= storeqty ){
-
-            $('#error'+oid).empty(); 
-        }  
-    }
-
-
-}
-$(document).ready(function(){
-  $('body .orderid').popover()
-})
-//define some sample data
-
-</script>
+                 $(`.productionQuantityTotal[data-product-id="${product_id}"]`).val(quantity);
+             })
+        });
+    </script>
+@endpush

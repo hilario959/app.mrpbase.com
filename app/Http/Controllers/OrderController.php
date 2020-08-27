@@ -10,24 +10,14 @@ use DB;
 class OrderController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $order = Order::all();   
-        $client = Client::latest()->get();    
+        $order = Order::all();
+        $client = Client::latest()->get();
         return view('orders.index', compact('order', 'client'));
     }
 
@@ -39,7 +29,7 @@ class OrderController extends Controller
     public function create()
     {
         $client = Client::latest()->get();
-        $product = Product::all();  
+        $product = Product::all();
         return view('orders.create', compact('client','product'));
     }
 
@@ -54,17 +44,17 @@ class OrderController extends Controller
         $request->validate([
             //'code'=>'required',
             'client_id'=>'required',
-        ]);        
-        
+        ]);
+
         $order = new Order([
             'client_id' => $request->get('client_id'),
             'status' => $request->get('status'),
             'delivery_date' => $request->get('delivery_date'),
             'notes' => $request->get('notes'),
         ]);
-        
+
         $order->save();
-        
+
         $order->code = "SO-" . $order->id;
         $order->save();
 
@@ -75,7 +65,7 @@ class OrderController extends Controller
             $data['quantity']=$request->quantity[$i];
             $data['remaining_quantity']=$request->quantity[$i];
             $data['price']=$request->price[$i];
-            DB::table('order_products')->insert($data);
+            DB::table('order_product')->insert($data);
         }
         return redirect('/home/order')->with('success', 'Order saved!');
     }
@@ -101,9 +91,9 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
         $client = Client::latest()->get();
-        $product = Product::all(); 
-        $order_details=DB::table('order_products')->where('order_id',$id)->get(); 
-        return view('orders.edit', compact('order','client','product','order_details')); 
+        $product = Product::all();
+        $order_details=DB::table('order_product')->where('order_id',$id)->get();
+        return view('orders.edit', compact('order','client','product','order_details'));
     }
 
     /**
@@ -118,7 +108,7 @@ class OrderController extends Controller
         $request->validate([
             'code'=>'required',
             'client_id'=>'required',
-        ]);        
+        ]);
 
         $order = Order::find($id);
         $order->code =  $request->get('code');
@@ -126,8 +116,8 @@ class OrderController extends Controller
         $order->status = $request->get('status');
         $order->delivery_date = $request->get('delivery_date');
         $order->notes = $request->get('notes');
-        $order->save();   
-        DB::table('order_products')->where('order_id',$id)->delete();     
+        $order->save();
+        DB::table('order_product')->where('order_id',$id)->delete();
         $data=array();
         for ($i=0;$i<=count($request->product_id)-1;$i++){
             $data['order_id']=$order->id;
@@ -135,7 +125,7 @@ class OrderController extends Controller
             $data['quantity']=$request->quantity[$i];
             $data['remaining_quantity']=$request->quantity[$i];
             $data['price']=$request->price[$i];
-            DB::table('order_products')->insert($data);
+            DB::table('order_product')->insert($data);
         }
         return redirect('/home/order')->with('success', 'Order updated!');
     }
@@ -149,7 +139,7 @@ class OrderController extends Controller
     public function destroy($id)
     {
         $order = Order::find($id);
-        $order->delete();        
+        $order->delete();
         return redirect('/home/order')->with('success', 'Order deleted!');
     }
 }

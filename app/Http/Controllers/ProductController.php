@@ -8,23 +8,13 @@ use App\Product;
 class ProductController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $product = Product::all();        
+        $product = Product::all();
         return view('products.index', compact('product'));
     }
 
@@ -49,8 +39,8 @@ class ProductController extends Controller
         $request->validate([
             'name'=>'required',
             'code'=>'required',
-        ]);        
-        
+        ]);
+
         $product = new Product([
             'name' => $request->get('name'),
             'code' => $request->get('code'),
@@ -58,7 +48,7 @@ class ProductController extends Controller
             'weight' => $request->get('weight'),
             'price' => $request->get('price'),
         ]);
-        
+
         $product->save();
         return redirect('/home/product')->with('success', 'Product saved!');
     }
@@ -83,7 +73,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        return view('products.edit', compact('product')); 
+        return view('products.edit', compact('product'));
     }
 
     /**
@@ -98,7 +88,7 @@ class ProductController extends Controller
         $request->validate([
             'name'=>'required',
             'code'=>'required',
-        ]);        
+        ]);
 
         $product = Product::find($id);
         $product->name =  $request->get('name');
@@ -106,8 +96,8 @@ class ProductController extends Controller
         $product->description = $request->get('description');
         $product->weight = $request->get('weight');
         $product->price = $request->get('price');
-        $product->save();        
-        
+        $product->save();
+
         return redirect('/home/product')->with('success', 'Product updated!');
     }
 
@@ -120,7 +110,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::find($id);
-        $product->delete();        
+        $product->delete();
         return redirect('/home/product')->with('success', 'Product deleted!');
     }
 }

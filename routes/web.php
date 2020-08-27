@@ -19,10 +19,16 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('/home/client', 'ClientController');
-Route::resource('/home/product', 'ProductController');
-Route::resource('/home/order', 'OrderController');
-Route::resource('/home/production', 'ProductionController');
-Route::get('/home/production/{id}/edit2', 'ProductionController@edit2');
-Route::any('/home/production/view', 'ProductionController@view')->name('view');
+Route::group(['middleware' => 'auth'], function () {
+    Route::prefix('home')->group(function () {
+        Route::get('/', 'HomeController@index')->name('home');
+
+        Route::resource('client', 'ClientController');
+        Route::resource('product', 'ProductController');
+        Route::resource('order', 'OrderController');
+        Route::resource('production', 'ProductionController');
+
+        Route::get('production/{id}/edit2', 'ProductionController@edit2');
+        Route::any('production/view', 'ProductionController@view')->name('view');
+    });
+});

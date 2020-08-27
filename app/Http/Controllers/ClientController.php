@@ -8,23 +8,13 @@ use App\Client;
 class ClientController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $client = Client::all();        
+        $client = Client::all();
         return view('clients.index', compact('client'));
     }
 
@@ -50,8 +40,8 @@ class ClientController extends Controller
             'first_name'=>'required',
             'last_name'=>'required',
             'email'=>'required'
-        ]);        
-        
+        ]);
+
         $client = new Client([
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
@@ -62,7 +52,7 @@ class ClientController extends Controller
             'tax_id' => $request->get('tax_id'),
             'notes' => $request->get('notes')
         ]);
-        
+
         $client->save();
         return redirect('/home/client')->with('success', 'Client saved!');
     }
@@ -87,7 +77,7 @@ class ClientController extends Controller
     public function edit($id)
     {
         $client = Client::find($id);
-        return view('clients.edit', compact('client')); 
+        return view('clients.edit', compact('client'));
     }
 
     /**
@@ -103,7 +93,7 @@ class ClientController extends Controller
             'first_name'=>'required',
             'last_name'=>'required',
             'email'=>'required'
-        ]);        
+        ]);
 
         $client = Client::find($id);
         $client->first_name =  $request->get('first_name');
@@ -114,8 +104,8 @@ class ClientController extends Controller
         $client->address = $request->get('address');
         $client->tax_id = $request->get('tax_id');
         $client->notes = $request->get('notes');
-        $client->save();        
-        
+        $client->save();
+
         return redirect('/home/client')->with('success', 'Client updated!');
     }
 
@@ -128,7 +118,7 @@ class ClientController extends Controller
     public function destroy($id)
     {
         $client = Client::find($id);
-        $client->delete();        
+        $client->delete();
         return redirect('/home/client')->with('success', 'Client deleted!');
     }
 }

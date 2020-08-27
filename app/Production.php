@@ -2,17 +2,32 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @mixin Builder
+ */
 class Production extends Model
 {
+    public const PREFIX = 'PO';
+
     protected $fillable = [
-        'order_id',
-        'product_id',
-        'quantity',
-        'to_be_produced',
-        'unique_id',
-        'created_at',
-        'updated_at'
+        'start_at',
+        'end_at'
     ];
+
+    protected $dates = [
+        'start_at', 'end_at'
+    ];
+
+    public function getTokenAttribute()
+    {
+        return self::PREFIX . '-' . ($this->attributes['id'] ?? '');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(ProductionProduct::class);
+    }
 }

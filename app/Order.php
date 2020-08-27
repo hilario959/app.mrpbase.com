@@ -6,16 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    public const STATUS_RECEIVED = 0;
+    public const STATUS_PAID = 1;
+    public const STATUS_IN_PROGRESS = 2;
+    public const STATUS_DONE = 3;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'code', 
-        'client_id', 
-        'status', 
-        'delivery_date', 
+        'code',
+        'client_id',
+        'status',
+        'delivery_date',
         'notes'
     ];
 

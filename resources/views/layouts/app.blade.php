@@ -24,7 +24,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="/modules/tabulator-tables/dist/js/tabulator.min.js"></script>
-    
+
 </head>
 <body>
     <div id="app">
@@ -123,7 +123,8 @@
             @yield('content')
         </main>
     </div>
-    
+
     @yield('script')
+    @stack('scripts')
 </body>
 </html>

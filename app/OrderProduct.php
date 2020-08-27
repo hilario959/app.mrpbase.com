@@ -2,10 +2,16 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class OrderProduct extends Model
-{   
+/**
+ * @mixin Builder
+ */
+class OrderProduct extends Pivot
+{
+    public $incrementing = true;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -16,7 +22,7 @@ class OrderProduct extends Model
         'product_id',
         'quantity',
         'remaining_quantity',
-        'price'     
+        'price'
     ];
 
     /**
