@@ -7,6 +7,7 @@ use App\Order;
 use App\OrderProduct;
 use App\Production;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class ProductionController extends Controller
 {
@@ -78,37 +79,96 @@ class ProductionController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Production $production
+     * @return \Illuminate\View\View
      */
-    public function show($id)
+    public function show(Production $production)
     {
-        //
+        $productionProducts = $production->products()->with('product')->get();
+
+        $orders = Order::whereIn('id', $productionProducts->pluck('order_id')->unique())
+            ->with(['client', 'productionProducts' => function ($query) use ($production) {
+                $query->where('production_id', $production->id);
+            }])->get();
+
+        return view('production.show', [
+            'production' => $production,
+            'productionProducts' => $productionProducts,
+            'orders' => $orders
+        ]);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Production $production
+     * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(Production $production)
     {
-        //
+        $baseQuery = $production->products()
+            ->with(['product']);
+
+        $productionData = clone $baseQuery;
+        $productionData->with(['order', 'order.client'])
+            ->productQuantities();
+
+        $productData = clone $baseQuery;
+        $productData->groupBy('product_id');
+
+        return view('production.edit', [
+            'production' => $production,
+            'productionData' => $productionData->get(),
+            'productData' => $productData->get()
+        ]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ProductionStoreRequest $request
+     * @param Production $production
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
-    public function update(Request $request, $id)
+    public function update(ProductionStoreRequest $request, Production $production)
     {
-        //
+        $requestData = $request->validated();
+
+        \DB::beginTransaction();
+        try {
+            $production = $production->fill([
+                'start_at' => $requestData['start_at'],
+                'end_at' => $requestData['end_at']
+            ]);
+            $production->save();
+
+            /** @var Collection $productionProducts */
+            $productionProducts = $production->products;
+
+            foreach ($productionProducts as $item) {
+                $newQuantity = ($requestData['products'][$item->id]['quantity'] ?? 0) - $item->quantity;
+
+                $orderProduct = OrderProduct::where([
+                    'order_id' => $item->order_id,
+                    'product_id' => $item->product_id
+                ])->first();
+
+                $orderProduct->remaining_quantity -= $newQuantity;
+                $orderProduct->save();
+
+                if ($orderProduct->remaining_quantity !== 0 && $orderProduct->order->status === Order::STATUS_DONE) {
+                    $orderProduct->order->update(['status' => ORDER::STATUS_IN_PROGRESS]);
+                }
+            }
+
+            $production->products()->delete();
+            $production->products()->createMany($requestData['products']);
+
+            \DB::commit();
+        } catch (\Exception $e) {
+            \DB::rollback();
+
+            throw $e;
+        }
+
+        return redirect()->route('production.index');
     }
 
     /**

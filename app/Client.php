@@ -14,6 +14,11 @@ class Client extends Model
         'number',
         'address',
         'tax_id',
-        'notes'       
+        'notes'
     ];
+
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }
