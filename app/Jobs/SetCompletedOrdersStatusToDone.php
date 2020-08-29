@@ -25,7 +25,6 @@ class SetCompletedOrdersStatusToDone implements ShouldQueue
      */
     public function __construct($limit, $offset)
     {
-        //
         $this->limit = $limit;
         $this->offset = $offset;
     }
