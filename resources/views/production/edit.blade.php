@@ -6,6 +6,8 @@
             @method('PUT')
             @csrf
 
+            <input name="timezone" hidden value="">
+
             <div class="row">
                 <div class="col-12 row">
                     <a class="btn btn-lg btn-link" href="{{ route('production.index') }}">< {{ __('Back') }}</a>
@@ -25,13 +27,25 @@
                     <div class="row">
                         <div class="col">
                             <label for="start_at">{{ __('Start date') }}</label>
-                            <input type="datetime-local" name="start_at" class="form-control" id="start_at"
-                                   value="{{ $production->start_at->format('Y-m-d\Th:i') }}" required>
+                            <div class="input-group datetimepicker datetimepicker-input" id="dt1" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#dt1"
+                                       name="start_at" id="start_at" required
+                                       value="{{ $production->start_at->format('m/d/Y g:m A') }}"/>
+                                <div class="input-group-append" data-target="#dt1" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col">
                             <label for="end_at">{{ __('End date') }}</label>
-                            <input type="datetime-local" name="end_at" class="form-control" id="end_at"
-                                   value="{{ $production->end_at->format('Y-m-d\Th:i') }}" required>
+                            <div class="input-group datetimepicker datetimepicker-input" id="dt2" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#dt2"
+                                       name="end_at" id="end_at" required
+                                       value="{{ $production->start_at->format('m/d/Y g:m A') }}"/>
+                                <div class="input-group-append" data-target="#dt2" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -107,10 +121,34 @@
     </div>
 @endsection
 
+@push('styles')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
+@endpush
+
 @push('scripts')
-    <script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone-with-data-2012-2022.min.js" defer></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js" defer></script>
+
+    <script defer>
         $(document).ready(function () {
-             $(document).on('change', '.productionQuantity', function () {
+            var timezone = moment.tz.guess();
+            $('input[name="timezone"]').val(timezone);
+
+            $('#dt1').datetimepicker({
+            });
+            $('#dt2').datetimepicker({
+                useCurrent: false
+            });
+            $("#dt1").on("change.datetimepicker", function (e) {
+                $('#dt2').datetimepicker('minDate', e.date);
+            });
+            $("#dt2").on("change.datetimepicker", function (e) {
+                $('#dt1').datetimepicker('maxDate', e.date);
+            });
+
+
+            $(document).on('change', '.productionQuantity', function () {
                  const $input = $(this);
 
                  computeProductsTotal($input);
@@ -137,4 +175,7 @@
             }
         });
     </script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 @endpush

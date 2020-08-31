@@ -37,6 +37,7 @@ class ProductionStoreRequest extends FormRequest
     public function rules()
     {
         return [
+            'timezone' => 'required',
             'start_at' => 'required|date',
             'end_at' => 'required|date|after:start_at',
             'products' => 'required|array|min:1',

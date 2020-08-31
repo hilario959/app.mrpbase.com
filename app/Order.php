@@ -52,7 +52,7 @@ class Order extends Model
     public function isCompleted()
     {
         foreach ($this->products as $item) {
-            if ($item->pivot->remaining_quantity !== 0) {
+            if ($item->pivot->remaining_quantity > 0) {
                 return false;
             }
         }

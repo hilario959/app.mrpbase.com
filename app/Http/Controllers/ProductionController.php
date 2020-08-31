@@ -6,6 +6,7 @@ use App\Http\Requests\ProductionStoreRequest;
 use App\Order;
 use App\OrderProduct;
 use App\Production;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
@@ -61,12 +62,21 @@ class ProductionController extends Controller
 
             $production->products()->createMany($data['products']);
 
+            $orderIds = [];
             foreach ($data['products'] as $item) {
+                $orderIds[] = $item['order_id'];
                 OrderProduct::where([
                     'order_id' => $item['order_id'],
                     'product_id' => $item['product_id']
                 ])->decrement('remaining_quantity', $item['quantity']);
             }
+
+            $orders = Order::with('products')->whereIn('id', array_unique($orderIds))->get();
+            $orders = $orders->filter(function ($item) {
+                return $item->isCompleted() === false && $item->status !== Order::STATUS_IN_PROGRESS;
+            });
+
+            Order::whereIn('id', $orders->pluck(null, 'id')->keys())->update(['status' => Order::STATUS_IN_PROGRESS]);
 
             \DB::commit();
         } catch (\Exception $e) {
@@ -154,7 +164,7 @@ class ProductionController extends Controller
                 $orderProduct->save();
 
                 if ($orderProduct->remaining_quantity !== 0 && $orderProduct->order->status === Order::STATUS_DONE) {
-                    $orderProduct->order->update(['status' => ORDER::STATUS_IN_PROGRESS]);
+                    $orderProduct->order->update(['status' => Order::STATUS_IN_PROGRESS]);
                 }
             }
 

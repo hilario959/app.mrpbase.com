@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,8 +18,9 @@ class Production extends Model
         'end_at'
     ];
 
-    protected $dates = [
-        'start_at', 'end_at'
+    protected $casts = [
+        'start_at' => 'datetime',
+        'end_at' => 'datetime'
     ];
 
     public function getTokenAttribute()
