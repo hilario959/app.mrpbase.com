@@ -52,7 +52,6 @@
                 var id = $(this).data('id');
 
                 if (!$(this).find('div.tabulator').length) {
-                    console.log("test1");
                     var table = new Tabulator("#orderProductsTable" + id, {
                         layout:"fitColumns",
                         movableColumns:true,

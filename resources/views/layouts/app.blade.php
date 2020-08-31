@@ -127,6 +127,21 @@
     </div>
 
     @yield('script')
+
+    <script>
+        window.addEventListener("load", function () {
+            if (document.getElementById('tabulator') != null) {
+                var table = new Tabulator("#tabulator", {
+                    layout:"fitColumns",
+                    movableColumns:true,
+                    initialSort:[
+                        {column:"code", dir:"desc"},
+                    ]
+                });
+            }
+        },false);
+    </script>
+
     @stack('scripts')
 </body>
 </html>
