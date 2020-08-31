@@ -41,7 +41,7 @@
                             <div class="input-group datetimepicker datetimepicker-input" id="dt2" data-target-input="nearest">
                                 <input type="text" class="form-control datetimepicker-input" data-target="#dt2"
                                        name="end_at" id="end_at" required
-                                       value="{{ $production->start_at->format('m/d/Y g:m A') }}"/>
+                                       value="{{ $production->end_at->format('m/d/Y g:m A') }}"/>
                                 <div class="input-group-append" data-target="#dt2" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
