@@ -10,7 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SetCompletedOrdersStatusToDone implements ShouldQueue
+class SetOrdersStatusToProgress implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -37,8 +37,8 @@ class SetCompletedOrdersStatusToDone implements ShouldQueue
     public function handle()
     {
         $date = now();
-        $productions = Production::where('end_at', '<=', $date->format('Y-m-d H:i:s'))
-            ->where('end_at', '>', $date->subHour()->format('Y-m-d H:i:s'))
+        $productions = Production::where('end_at', '<', $date->format('Y-m-d H:i:s'))
+            ->where('start_at', '>=', $date->subHour()->format('Y-m-d H:i:s'))
             ->limit($this->limit)
             ->offset($this->offset)
             ->with(['products' => function ($query) {
@@ -50,12 +50,12 @@ class SetCompletedOrdersStatusToDone implements ShouldQueue
 
         foreach ($productions as $production) {
             foreach ($production->products as $item) {
-                if ($item->order->status === Order::STATUS_DONE) {
+                if ($item->order->status === Order::STATUS_IN_PROGRESS) {
                     continue;
                 }
 
-                if ($item->order->products->isEmpty()) {
-                    $item->order->update(['status' => Order::STATUS_DONE]);
+                if ($item->order->products->isNotEmpty()) {
+                    $item->order->update(['status' => Order::STATUS_IN_PROGRESS]);
                 }
             }
         }
