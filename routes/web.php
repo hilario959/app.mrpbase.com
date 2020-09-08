@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('product', 'ProductController');
         Route::resource('order', 'OrderController');
         Route::resource('production', 'ProductionController');
+        Route::resource('material', 'MaterialController');
 
         Route::get('production/{id}/edit2', 'ProductionController@edit2');
         Route::any('production/view', 'ProductionController@view')->name('view');

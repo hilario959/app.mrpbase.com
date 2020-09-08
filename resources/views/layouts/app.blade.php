@@ -70,6 +70,12 @@
                                 {{ __('Products') }}
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('material.index') }}">
+                                <i class="fas fa-boxes text-warning"></i>
+                                {{ __('Materials') }}
+                            </a>
+                        </li>
                     @endauth
                     </ul>
 
