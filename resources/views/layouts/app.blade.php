@@ -60,22 +60,28 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('client.index') }}">
-                                <i class="fas fa-users text-info"></i>
+                                <i class="fas fa-users text-primary"></i>
                                 {{ __('Clients') }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('product.index') }}">
-                                <i class="fas fa-box text-danger"></i>
+                                <i class="fas fa-layer-group text-warning"></i>
                                 {{ __('Products') }}
+                            </a>
+                        </li>
+                            <a class="nav-link" href="{{ route('inventory.index') }}">
+                                <i class="fas fa-boxes text-danger"></i>
+                                {{ __('Inventories') }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('material.index') }}">
-                                <i class="fas fa-boxes text-warning"></i>
+                                <i class="fas fa-box text-info"></i>
                                 {{ __('Materials') }}
                             </a>
                         </li>
+                        <li class="nav-item">
                     @endauth
                     </ul>
 
