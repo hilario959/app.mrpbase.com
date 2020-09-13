@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Material;
 use Illuminate\Http\Request;
 use App\Product;
+use Illuminate\Support\Arr;
 
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -19,38 +19,41 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function create()
     {
-        return view('products.create');
+        $materials = Material::get();
+        return view('products.create', compact('materials'));
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $requestData = $request->validate([
             'name'=>'required',
             'code'=>'required',
+            'description' => 'required|string',
+            'price' => 'required|numeric',
+            'materials' => 'nullable|array',
+            'materials.*.id' => 'required|exists:App\Material',
+            'materials.*.quantity' => 'required|numeric',
         ]);
 
-        $product = new Product([
-            'name' => $request->get('name'),
-            'code' => $request->get('code'),
-            'description' => $request->get('description'),
-            'weight' => $request->get('weight'),
-            'price' => $request->get('price'),
-        ]);
+        $product = Product::create(Arr::except($requestData, ['materials']));
 
-        $product->save();
-        return redirect('/home/product')->with('success', 'Product saved!');
+        if (!empty($requestData['materials'])) {
+            $materialsData = [];
+            foreach ($requestData['materials'] as $item) {
+                $materialsData[$item['id']] = ['quantity' => $item['quantity']];
+            }
+            $product->materials()->attach($materialsData);
+        }
+
+        return redirect()->route('product.index')->with('success', 'Product saved!');
     }
 
     /**
@@ -65,52 +68,55 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Product $product
+     * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        $product = Product::find($id);
-        return view('products.edit', compact('product'));
+        $product->load('materials');
+
+        $materials = Material::get();
+        return view('products.edit', compact('product', 'materials'));
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Product $product
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        $request->validate([
+        $requestData = $request->validate([
             'name'=>'required',
             'code'=>'required',
+            'description' => 'required|string',
+            'price' => 'required|numeric',
+            'materials' => 'nullable|array',
+            'materials.*.id' => 'required|exists:App\Material',
+            'materials.*.quantity' => 'required|numeric',
         ]);
 
-        $product = Product::find($id);
-        $product->name =  $request->get('name');
-        $product->code = $request->get('code');
-        $product->description = $request->get('description');
-        $product->weight = $request->get('weight');
-        $product->price = $request->get('price');
-        $product->save();
+        $product->update(Arr::except($requestData, ['materials']));
 
-        return redirect('/home/product')->with('success', 'Product updated!');
+        $product->materials()->detach();
+        if (!empty($requestData['materials'])) {
+            $materialsData = [];
+            foreach ($requestData['materials'] as $item) {
+                $materialsData[$item['id']] = ['quantity' => $item['quantity']];
+            }
+            $product->materials()->attach($materialsData);
+        }
+
+        return redirect()->route('product.index')->with('success', 'Product updated!');
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Product $product
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        $product = Product::find($id);
         $product->delete();
-        return redirect('/home/product')->with('success', 'Product deleted!');
+        return redirect()->route('product.index')->with('success', 'Product deleted!');
     }
 }

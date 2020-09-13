@@ -14,8 +14,20 @@ class Inventory extends Model
         'notes'
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        self::created(function (Inventory $model) {
+            $model->material()->increment('amount', $model->quantity);
+        });
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function material()
     {
-        return $this->belongsTo('App\Material', 'material_id');
+        return $this->belongsTo(Material::class);
     }
 }

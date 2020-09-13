@@ -70,11 +70,6 @@
                                 {{ __('Products') }}
                             </a>
                         </li>
-                            <a class="nav-link" href="{{ route('inventory.index') }}">
-                                <i class="fas fa-boxes text-danger"></i>
-                                {{ __('Inventories') }}
-                            </a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('material.index') }}">
                                 <i class="fas fa-box text-info"></i>

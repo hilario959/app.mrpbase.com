@@ -1,39 +1,37 @@
-@extends('home')@section('content')
+@extends('home')
+@section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Update a Material') }}
-                    <a class="float-right" href="{{ route('material.index') }}">{{ __('Back') }}</a>
+            <div class="row">
+                <a class="btn btn-lg btn-link" href="{{ route('material.index') }}">< {{ __('Back') }}</a>
+            </div>
+
+            @if(session()->get('success'))
+                <div class="alert alert-success">
+                    {{ session()->get('success') }}
                 </div>
-                    <div class="card-body">
-                        @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div><br />
-                        @endif
-                        <form method="post" action="{{ route('material.update', $material->id) }}">
-                            @method('PATCH')
-                            @csrf
-                            <div class="form-group">
-                                <label for="name">{{ __('Name') }}</label>
-                                <input type="text" class="form-control" name="name" value="{{ $material->name }}" />
-                            </div>
-                            <div class="form-group">
-                                <label for="code">{{ __('SKU') }}</label>
-                                <input type="text" class="form-control" name="code" value="{{ $material->code }}" />
-                            </div>
-                            <div class="form-group">
-                                <label for="description">{{ __('Description') }}</label>
-                                <input type="text" class="form-control" name="description" value="{{ $material->description }}" />
-                            </div>
-                            <button type="submit" class="btn btn-link">{{ __('Update Material') }}</button>
-                        </form>
-                    </div>
+            @endif
+
+            <ul class="nav nav-pills mb-5" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-products-tab" data-toggle="pill" href="#pills-products" role="tab">
+                        {{ __('Update material') }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-orders-tab" data-toggle="pill" href="#pills-orders" role="tab">
+                        {{ __('Inventory') }}
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-products" role="tabpanel">
+                    @include('materials.partials.edit_form')
+                </div>
+                <div class="tab-pane fade" id="pills-orders" role="tabpanel">
+                    @include('materials.partials.inventory')
                 </div>
             </div>
         </div>

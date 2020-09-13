@@ -17,16 +17,16 @@
                         </div><br />
                         @endif
                         <form method="post" action="{{ route('product.update', $product->id) }}">
-                            @method('PATCH') 
+                            @method('PATCH')
                             @csrf
-                            <div class="form-group">    
+                            <div class="form-group">
                                 <label for="name">{{ __('Name') }}</label>
                                 <input type="text" class="form-control" name="name" value="{{ $product->name }}" />
-                            </div>         
+                            </div>
                             <div class="form-group">
                                 <label for="code">{{ __('SKU') }}</label>
                                 <input type="text" class="form-control" name="code" value="{{ $product->code }}" />
-                            </div>          
+                            </div>
                             <div class="form-group">
                                 <label for="description">{{ __('Description') }}</label>
                                 <input type="text" class="form-control" name="description" value="{{ $product->description }}" />
@@ -39,6 +39,9 @@
                                 <label for="price">{{ __('Price') }}</label>
                                 <input type="text" class="form-control" name="price" value="{{ $product->price }}" />
                             </div>
+
+                            @include('products.partials.materials', ['materials' => $materials])
+
                             <button type="submit" class="btn btn-link">{{ __('Update Product') }}</button>
                         </form>
                     </div>
