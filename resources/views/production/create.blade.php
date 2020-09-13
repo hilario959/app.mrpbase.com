@@ -66,7 +66,7 @@
                                     <input type="hidden" name="products[{{ $k }}][order_id]" value="{{ $item->order_id }}">
 
                                     <a href="{{ route('order.edit', ['order' => $item->order_id]) }}" target="_blank" class="btn btn-lg btn-link"
-                                          title="{{ $item->order->client->first_name }} {{ $item->order->client->last_name }} {{ $item->order->delivery_date }}">
+                                       title="{{ $item->order->client->first_name }} {{ $item->order->client->last_name }} {{ $item->order->delivery_date }}">
                                         {{ $item->order->code }}
                                     </a>
                                 </td>
@@ -100,13 +100,43 @@
                         </tr>
                         @foreach($productData as $item)
                             <tr>
-                                <td class="align-middle">
-                                    {{ $item->product->name }}
+                                <td class="align-middle w-50">
+                                    <div>{{ $item->product->name }}</div>
+                                    <small>
+                                        {{
+                                            $item->product->materials->map(function ($material) {
+                                                return $material->name . ' (' . $material->pivot->quantity . ')';
+                                            })->implode(', ')
+                                        }}
+                                    </small>
                                 </td>
 
-                                <td class="align-middle">
+                                <td class="align-middle w-50">
                                     <input class="total_{{ $item->product->id }} form-control productionQuantityTotal"
-                                           data-product-id="{{ $item->product->id }}" value="0" type="text" readonly>
+                                           data-product-id="{{ $item->product->id }}"
+                                           data-materials='@json($item->product->materials->mapWithKeys(function ($item) {
+                                                return [$item->id => ['quantity' => $item->pivot->quantity]];
+                                           }))'
+                                           value="0" type="text" readonly>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+
+                    <table class="table table-light border rounded">
+                        <tr>
+                            <th>{{ __('Material') }}</th>
+                            <th>{{ __('Total') }}</th>
+                        </tr>
+                        @foreach($materials as $item)
+                            <tr>
+                                <td class="align-middle w-50">
+                                    {{ $item->name }} ({{ $item->amount }})
+                                </td>
+
+                                <td class="align-middle w-50">
+                                    <input class="total_material_{{ $item->id }} form-control materialQuantityTotal"
+                                           data-material-id="{{ $item->id }}" value="0" type="text" readonly>
                                 </td>
                             </tr>
                         @endforeach
@@ -145,21 +175,37 @@
             $('input[name="timezone"]').val(moment.tz.guess());
 
             $(document).on('change', '.productionQuantity', function () {
-                 const $input = $(this),
-                     product_id = $(this).data('product-id');
+                const $input = $(this),
+                    product_id = $(this).data('product-id');
 
-                 if (!$input.get(0).checkValidity()) {
-                     $input.get(0).reportValidity();
-                     return;
-                 }
+                if (!$input.get(0).checkValidity()) {
+                    $input.get(0).reportValidity();
+                    return;
+                }
 
-                 let quantity = 0;
-                 $(`.productionQuantity[data-product-id="${product_id}"]`).each(function (i, el) {
-                     quantity += parseFloat($(el).val() || 0);
-                 })
+                let quantity = 0,
+                    materials = {};
 
-                 $(`.productionQuantityTotal[data-product-id="${product_id}"]`).val(quantity);
-             })
+                $(`.productionQuantity[data-product-id="${product_id}"]`).each((i, el) => {
+                    quantity += parseFloat($(el).val() || 0);
+                })
+
+                $(`.productionQuantityTotal[data-product-id="${product_id}"]`).val(quantity);
+
+                $('.productionQuantityTotal').each((i, el) => {
+                    const $el = $(el),
+                        productQuantity = parseFloat($el.val() || 0),
+                        productMaterials = $el.data('materials');
+
+                    Object.keys(productMaterials).forEach((key) => {
+                        materials[key] = (materials[key] || 0) + (productMaterials[key]['quantity'] * productQuantity)
+                    });
+                })
+
+                Object.keys(materials).forEach((key) => {
+                    $(`.materialQuantityTotal[data-material-id="${key}"]`).val(parseInt(materials[key]));
+                })
+            })
         });
     </script>
 @endpush

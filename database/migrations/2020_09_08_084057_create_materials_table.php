@@ -19,7 +19,7 @@ class CreateMaterialsTable extends Migration
             $table->string('code');
             $table->string('name');
             $table->string('description');
-            $table->double('amount', 8, 2)->unsigned()->default(0);
+            $table->double('amount', 8, 2)->default(0);
         });
     }
 

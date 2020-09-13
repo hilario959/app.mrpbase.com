@@ -26,6 +26,9 @@
             <div class="tab-pane fade" id="pills-orders" role="tabpanel">
                 @include('production.partials.show_orders')
             </div>
+{{--            <div class="tab-pane fade" id="pills-materials" role="tabpanel">--}}
+{{--                @include('production.partials.show_materials')--}}
+{{--            </div>--}}
         </div>
     </div>
 @endsection

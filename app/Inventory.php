@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 class Inventory extends Model
 {
     protected $fillable = [
+        'production_id',
         'material_id',
         'date_entry',
         'quantity',
@@ -20,6 +21,10 @@ class Inventory extends Model
 
         self::created(function (Inventory $model) {
             $model->material()->increment('amount', $model->quantity);
+        });
+
+        self::deleting(function (Inventory $model) {
+            $model->material()->increment('amount', $model->quantity * -1);
         });
     }
 

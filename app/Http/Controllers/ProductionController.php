@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductionStoreRequest;
+use App\Inventory;
+use App\Material;
 use App\Order;
 use App\OrderProduct;
+use App\Product;
 use App\Production;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class ProductionController extends Controller
 {
@@ -35,12 +39,19 @@ class ProductionController extends Controller
             ->addSelect(['remaining_quantity', 'quantity']);
 
         $productData = clone $baseQuery;
-        $productData->with('product')
-            ->groupBy('product_id');
+        $productData->with(['product', 'product.materials'])->groupBy('product_id');
+        $productData = $productData->get();
+
+        $materials = Material::whereIn(
+            'id',
+            \DB::table('material_product')->whereIn('product_id', $productData->pluck('product_id'))
+                ->pluck('material_id')
+        )->get();
 
         return view('production.create', [
             'orderData' => $orderData->get(),
-            'productData' => $productData->get()
+            'productData' => $productData,
+            'materials' => $materials
         ]);
     }
 
@@ -51,24 +62,45 @@ class ProductionController extends Controller
      */
     public function store(ProductionStoreRequest $request)
     {
-        $data = $request->validated();
+        $requestData = $request->validated();
 
         \DB::beginTransaction();
         try {
             $production = Production::create([
-                'start_at' => $data['start_at'],
-                'end_at' => $data['end_at']
+                'start_at' => $requestData['start_at'],
+                'end_at' => $requestData['end_at']
             ]);
 
-            $production->products()->createMany($data['products']);
+            $production->products()->createMany($requestData['products']);
 
             $orderIds = [];
-            foreach ($data['products'] as $item) {
+            $productsQuantity = [];
+            foreach ($requestData['products'] as $item) {
                 $orderIds[] = $item['order_id'];
                 OrderProduct::where([
                     'order_id' => $item['order_id'],
                     'product_id' => $item['product_id']
                 ])->decrement('remaining_quantity', $item['quantity']);
+
+                $productsQuantity[$item['product_id']] = $item['quantity'];
+            }
+
+            $materialProduct = DB::table('material_product')
+                ->whereIn('product_id', array_column($requestData['products'], 'product_id'))
+                ->get();
+
+            $materials = $materialProduct->mapWithKeys(function ($item) use ($productsQuantity) {
+                return [$item->material_id => $item->quantity * $productsQuantity[$item->product_id]];
+            });
+
+            foreach ($materials as $id => $quantity) {
+                Inventory::create([
+                    'material_id' => $id,
+                    'production_id' => $production->id,
+                    'quantity' => $quantity * -1,
+                    'date_entry' => now(),
+                    'notes' => 'Used for production #' . $production->token
+                ]);
             }
 
             $orders = Order::with('products')->whereIn('id', array_unique($orderIds))->get();
@@ -123,11 +155,19 @@ class ProductionController extends Controller
 
         $productData = clone $baseQuery;
         $productData->groupBy('product_id');
+        $productData = $productData->get();
+
+        $materials = Material::whereIn(
+            'id',
+            \DB::table('material_product')->whereIn('product_id', $productData->pluck('product_id'))
+                ->pluck('material_id')
+        )->get();
 
         return view('production.edit', [
             'production' => $production,
             'productionData' => $productionData->get(),
-            'productData' => $productData->get()
+            'productData' => $productData,
+            'materials' => $materials
         ]);
     }
 
@@ -149,11 +189,17 @@ class ProductionController extends Controller
             ]);
             $production->save();
 
+            Inventory::where('production_id', $production->id)->get()->each(function ($item) {
+                 $item->delete();
+            });
+
             /** @var Collection $productionProducts */
             $productionProducts = $production->products;
+            $productsQuantity = [];
 
             foreach ($productionProducts as $item) {
                 $newQuantity = ($requestData['products'][$item->id]['quantity'] ?? 0) - $item->quantity;
+                $productsQuantity[$item['product_id']] = $requestData['products'][$item->id]['quantity'] ?? 0;
 
                 $orderProduct = OrderProduct::where([
                     'order_id' => $item->order_id,
@@ -166,6 +212,24 @@ class ProductionController extends Controller
                 if ($orderProduct->remaining_quantity !== 0 && $orderProduct->order->status === Order::STATUS_DONE) {
                     $orderProduct->order->update(['status' => Order::STATUS_IN_PROGRESS]);
                 }
+            }
+
+            $materialProduct = DB::table('material_product')
+                ->whereIn('product_id', array_column($requestData['products'], 'product_id'))
+                ->get();
+
+            $materials = $materialProduct->mapWithKeys(function ($item) use ($productsQuantity) {
+                return [$item->material_id => $item->quantity * $productsQuantity[$item->product_id]];
+            });
+
+            foreach ($materials as $id => $quantity) {
+                Inventory::create([
+                    'material_id' => $id,
+                    'production_id' => $production->id,
+                    'quantity' => $quantity * -1,
+                    'date_entry' => now(),
+                    'notes' => 'Used for production #' . $production->token
+                ]);
             }
 
             $production->products()->delete();

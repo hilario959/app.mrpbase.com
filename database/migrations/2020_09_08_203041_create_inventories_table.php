@@ -16,11 +16,21 @@ class CreateInventoriesTable extends Migration
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->unsignedInteger('production_id')->index()->nullable();
             $table->integer('material_id')->unsigned()->index();
-            $table->foreign('material_id')->references('id')->on('materials')->onDelete('cascade');
             $table->dateTime('date_entry');
             $table->double('quantity', 8, 2);
-            $table->string('notes');
+            $table->string('notes')->nullable();
+
+            $table->foreign('production_id')
+                ->references('id')
+                ->on('productions')
+                ->onDelete('cascade');
+
+            $table->foreign('material_id')
+                ->references('id')
+                ->on('materials')
+                ->onDelete('cascade');
         });
     }
 

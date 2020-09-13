@@ -18,4 +18,9 @@ class Material extends Model
     {
         return $this->hasMany(Inventory::class);
     }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }
