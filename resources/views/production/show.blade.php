@@ -17,6 +17,11 @@
                     {{ __('Orders Fulfilled') }}
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-materials-tab" data-toggle="pill" href="#pills-materials" role="tab">
+                    {{ __('Materials Used') }}
+                </a>
+            </li>
         </ul>
 
         <div class="tab-content" id="pills-tabContent">
@@ -26,9 +31,9 @@
             <div class="tab-pane fade" id="pills-orders" role="tabpanel">
                 @include('production.partials.show_orders')
             </div>
-{{--            <div class="tab-pane fade" id="pills-materials" role="tabpanel">--}}
-{{--                @include('production.partials.show_materials')--}}
-{{--            </div>--}}
+            <div class="tab-pane fade" id="pills-materials" role="tabpanel">
+                @include('production.partials.show_materials')
+            </div>
         </div>
     </div>
 @endsection

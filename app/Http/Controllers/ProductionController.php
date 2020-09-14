@@ -133,10 +133,13 @@ class ProductionController extends Controller
                 $query->where('production_id', $production->id);
             }])->get();
 
+        $inventory = Inventory::where('production_id', $production->id)->with('material')->get();
+
         return view('production.show', [
             'production' => $production,
             'productionProducts' => $productionProducts,
-            'orders' => $orders
+            'orders' => $orders,
+            'inventory' => $inventory
         ]);
     }
 
