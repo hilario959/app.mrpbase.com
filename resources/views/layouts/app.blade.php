@@ -60,7 +60,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('client.index') }}">
-                                <i class="fas fa-users text-primary"></i>
+                                <i class="fas fa-users text-info"></i>
                                 {{ __('Clients') }}
                             </a>
                         </li>
@@ -72,7 +72,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('material.index') }}">
-                                <i class="fas fa-box text-info"></i>
+                                <i class="fas fa-box text-danger"></i>
                                 {{ __('Materials') }}
                             </a>
                         </li>
