@@ -32,10 +32,6 @@
                                 <input type="text" class="form-control" name="description" value="{{ $product->description }}" />
                             </div>
                             <div class="form-group">
-                                <label for="weight">{{ __('Weight') }}</label>
-                                <input type="text" class="form-control" name="weight" value="{{ $product->weight }}" />
-                            </div>
-                            <div class="form-group">
                                 <label for="price">{{ __('Price') }}</label>
                                 <input type="text" class="form-control" name="price" value="{{ $product->price }}" />
                             </div>

@@ -32,7 +32,7 @@
                             <select class="advance-select-box form-control @error('status') is-invalid @enderror" id="status" name="status" required>
                                 <option value="" selected disabled>{{ __('Select a status') }}</option>
                                 <option value="0">{{ __('Received') }}</option>
-                                <option value="1">{{ __('Paid') }}</option>
+                                <!--<option value="1">{{ __('Paid') }}</option>-->
                                 <option value="2">{{ __('In progress') }}</option>
                                 <option value="3">{{ __('Done') }}</option>
                             </select>
