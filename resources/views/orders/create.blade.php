@@ -17,7 +17,7 @@
                     </div><br />
                     @endif
                     <form method="post" action="{{ route('order.store') }}">
-                        @csrf          
+                        @csrf
                         <div class="form-group">
                             <label for="client_id">{{ __('Client') }}</label>
                             <select class="advance-select-box form-control @error('client') is-invalid @enderror" id="client_id" name="client_id" required>
@@ -26,25 +26,25 @@
                                 <option value="{{ $clients->id }}">{{ $clients->first_name }} {{ $clients->last_name }} - {{ $clients->company }}</option>
                                 @endforeach
                             </select>
-                        </div>          
+                        </div>
                         <div class="form-group">
                             <label for="status">{{ __('Status') }}</label>
                             <select class="advance-select-box form-control @error('status') is-invalid @enderror" id="status" name="status" required>
                                 <option value="" selected disabled>{{ __('Select a status') }}</option>
                                 <option value="0">{{ __('Received') }}</option>
-                                <option value="1">{{ __('Paid') }}</option>
+                                <!--<option value="1">{{ __('Paid') }}</option>-->
                                 <option value="2">{{ __('In progress') }}</option>
                                 <option value="3">{{ __('Done') }}</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="delivery_date">{{ __('Delivery date') }}</label>
+                            <label for="delivery_date">{{ __('Delivery Date') }}</label>
                             <input type="date" class="form-control" name="delivery_date"/>
                         </div>
                         <div class="form-group">
                             <label for="notes">{{ __('Notes') }}</label>
                             <input type="text" class="form-control" name="notes"/>
-                        </div> 
+                        </div>
                         <div class="well clearfix mb-2 pull-right">
                             <a class="btn btn-success add-record text-white" data-added="0"><i class="fa fa-plus" aria-hidden="true"></i></a>
                         </div>
@@ -108,10 +108,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script type="text/javascript">
     jQuery(document).delegate('a.add-record', 'click', function(e) {
-       e.preventDefault();    
+       e.preventDefault();
        var content = jQuery('#sample_table tr'),
        size = jQuery('#tbl_posts >tbody >tr').length + 1,
-       element = null,    
+       element = null,
        element = content.clone();
        element.attr('id', 'rec-'+size);
        element.find('.delete-record').attr('data-id', size);
@@ -119,7 +119,7 @@
        element.find('.sn').html(size);
    });
     jQuery(document).delegate('a.delete-record', 'click', function(e) {
-       e.preventDefault();    
+       e.preventDefault();
        var didConfirm = confirm("Are you sure You want to delete");
        if (didConfirm == true) {
           var id = jQuery(this).attr('data-id');

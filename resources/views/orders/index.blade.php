@@ -1,10 +1,10 @@
 @extends('home')@section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-sm-12">  
+        <div class="col-sm-12">
             @if(session()->get('success'))
                 <div class="alert alert-success">
-                    {{ session()->get('success') }}  
+                    {{ session()->get('success') }}
                 </div>
             @endif
         </div>
@@ -18,8 +18,8 @@
                             <th >{{ __('Code') }}</th>
                             <th >{{ __('Client') }}</th>
                             <th >{{ __('Status') }}</th>
-                            <th >{{ __('Delivery date') }}</th>
-                            <th tabulator-formatter="html">Actions</th> 
+                            <th >{{ __('Delivery Date') }}</th>
+                            <th tabulator-formatter="html">{{ __('Acciones') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,16 +28,16 @@
                             <td>{{$orders->code}}</td>
                             <td>{{$orders->client->first_name}} {{$orders->client->last_name}}</td>
                             <td>
-                                @if($orders->status == 0) 
+                                @if($orders->status == 0)
                                     {{ __('Received') }}
                                 @endif
-                                @if($orders->status == 1) 
+                                @if($orders->status == 1)
                                     {{ __('Paid') }}
                                 @endif
-                                @if($orders->status == 2) 
+                                @if($orders->status == 2)
                                     {{ __('In Progress') }}
                                 @endif
-                                @if($orders->status == 3) 
+                                @if($orders->status == 3)
                                     {{ __('Done') }}
                                 @endif
                             </td>

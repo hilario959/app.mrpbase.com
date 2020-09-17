@@ -4,7 +4,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Add a Material') }}
+                <div class="card-header">{{ __('Add Material') }}
                     <a class="float-right" href="{{ route('material.index') }}">{{ __('Back') }}</a>
                 </div>
                 <div class="card-body">
@@ -21,11 +21,11 @@
                         @csrf
                         <div class="form-group">
                             <label for="code">{{ __('Code') }}</label>
-                            <input type="text" class="form-control" name="name"/>
+                            <input type="text" class="form-control" name="code"/>
                         </div>
                         <div class="form-group">
                             <label for="name">{{ __('Name') }}</label>
-                            <input type="text" class="form-control" name="code"/>
+                            <input type="text" class="form-control" name="name"/>
                         </div>
                         <div class="form-group">
                             <label for="description">{{ __('Description') }}</label>

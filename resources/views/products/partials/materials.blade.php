@@ -8,7 +8,7 @@
     <thead>
         <tr>
             <th>{{ __('Material') }}</th>
-            <th>{{ __('Amount') }}</th>
+            <th>{{ __('Quantity') }}</th>
             <th>{{ __('Actions') }}</th>
         </tr>
     </thead>

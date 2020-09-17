@@ -18,7 +18,7 @@ class CreateMaterialsTable extends Migration
             $table->timestamps();
             $table->string('code');
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->double('amount', 8, 2)->default(0);
         });
     }

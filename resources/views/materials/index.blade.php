@@ -16,9 +16,9 @@
                     <thead>
                         <tr>
                             <th >{{ __('Name') }}</th>
-                            <th >{{ __('code') }}</th>
+                            <th >{{ __('Code') }}</th>
                             <th >{{ __('Description') }}</th>
-                            <th tabulator-formatter="html">Actions</th>
+                            <th tabulator-formatter="html">{{ __('Acciones') }}</th>
                         </tr>
                     </thead>
                     <tbody>

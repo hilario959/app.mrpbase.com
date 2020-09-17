@@ -21,7 +21,7 @@ class CreateOrdersTable extends Migration
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
             $table->integer('status');
             $table->date('delivery_date');
-            $table->string('notes');
+            $table->string('notes')->nullable();
         });
     }
 

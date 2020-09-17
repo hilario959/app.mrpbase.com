@@ -17,12 +17,12 @@
                         </div><br />
                         @endif
                         <form method="post" action="{{ route('order.update', $order->id) }}">
-                            @method('PATCH') 
+                            @method('PATCH')
                             @csrf
-                            <div class="form-group">    
+                            <div class="form-group">
                                 <label for="code">{{ __('Code') }}</label>
                                 <input type="text" class="form-control" name="code" value="{{ $order->code }}" />
-                            </div>         
+                            </div>
                             <div class="form-group">
                                 <label for="client_id">{{ __('Client') }}</label>
                                 <select class="advance-select-box form-control @error('client') is-invalid @enderror" id="client_id" name="client_id" required>
@@ -31,13 +31,13 @@
                                         <option value="{{ $clients->id }}" @if($order->client_id == ($clients->id)) selected @endif> {{ $clients->first_name }} </option>
                                     @endforeach
                                 </select>
-                            </div>           
+                            </div>
                             <div class="form-group">
                                 <label for="status">{{ __('Status') }}</label>
                                 <select class="advance-select-box form-control @error('status') is-invalid @enderror" id="status" name="status" required>
                                     <option value="" disabled>{{ __('Select a Status') }}</option>
                                     <option value="0" @if($order->status == 0) selected @endif>{{ __('Received') }}</option>
-                                    <option value="1" @if($order->status == 1) selected @endif>{{ __('Paid') }}</option>
+                                   <!-- <option value="1" @if($order->status == 1) selected @endif>{{ __('Paid') }}</option>-->
                                     <option value="2" @if($order->status == 2) selected @endif>{{ __('In progress') }}</option>
                                     <option value="3" @if($order->status == 3) selected @endif>{{ __('Done') }}</option>
                                 </select>
@@ -73,9 +73,9 @@
                                     <tr id="rec-{{ $single_product->id }}">
                                         <td>
                               <select class="form-control" name="product_id[]">
-                                
+
                                 <option value="{{ $single_product->id }}">{{ $single_product->name }}</option>
-                              
+
                             </select>
                         </td>
                         <td>
@@ -135,10 +135,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script type="text/javascript">
     jQuery(document).delegate('a.add-record', 'click', function(e) {
-       e.preventDefault();    
+       e.preventDefault();
        var content = jQuery('#sample_table tr'),
        size = jQuery('#tbl_posts >tbody >tr').length + 1,
-       element = null,    
+       element = null,
        element = content.clone();
        element.attr('id', 'rec-'+size);
        element.find('.delete-record').attr('data-id', size);
@@ -146,7 +146,7 @@
        element.find('.sn').html(size);
    });
     jQuery(document).delegate('a.delete-record', 'click', function(e) {
-       e.preventDefault();    
+       e.preventDefault();
        var didConfirm = confirm("Are you sure You want to delete");
        if (didConfirm == true) {
           var id = jQuery(this).attr('data-id');

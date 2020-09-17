@@ -60,7 +60,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('client.index') }}">
-                                <i class="fas fa-users text-primary"></i>
+                                <i class="fas fa-users text-info"></i>
                                 {{ __('Clients') }}
                             </a>
                         </li>
@@ -72,7 +72,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('material.index') }}">
-                                <i class="fas fa-box text-info"></i>
+                                <i class="fas fa-box text-danger"></i>
                                 {{ __('Materials') }}
                             </a>
                         </li>
@@ -101,7 +101,7 @@
                                 <span class="sr-only"></span>
                               </button>
                               <div class="dropdown-menu dropdown-menu-right">
-                                <button class="dropdown-item" onclick="location.href='{{ url('home/production/create') }}'" type="button">{{ __('Add Production') }}</button>
+                                <button class="dropdown-item" onclick="location.href='{{ url('home/production/create') }}'" type="button">{{ __('Create Production') }}</button>
                                 <button class="dropdown-item" onclick="location.href='{{ url('home/client/create') }}'" type="button">{{ __('Add Client') }}</button>
                                 <button class="dropdown-item" onclick="location.href='{{ url('home/product/create') }}'" type="button">{{ __('Add Product') }}</button>
                               </div>
@@ -136,17 +136,19 @@
     @yield('script')
 
     <script>
-        window.addEventListener("load", function () {
-            if (document.getElementById('tabulator') != null) {
-                var table = new Tabulator("#tabulator", {
-                    layout:"fitColumns",
-                    movableColumns:true,
-                    initialSort:[
-                        {column:"code", dir:"desc"},
-                    ]
-                });
-            }
-        },false);
+      window.addEventListener("load", function() {
+        if(document.getElementById('tabulator') != null){
+          var table = new Tabulator("#tabulator", {
+            layout:"fitColumns",
+            movableColumns:true,
+            pagination:"local",
+            paginationSize:10,
+            initialSort:[
+              {column:"code", dir:"desc"},
+            ]
+          });
+        }
+      },false);
     </script>
 
     @stack('scripts')

@@ -1,10 +1,10 @@
 @extends('home')@section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-sm-12">  
+        <div class="col-sm-12">
             @if(session()->get('success'))
                 <div class="alert alert-success">
-                    {{ session()->get('success') }}  
+                    {{ session()->get('success') }}
                 </div>
             @endif
         </div>
@@ -17,9 +17,9 @@
                         <tr>
                             <th >{{ __('Name') }}</th>
                             <th >{{ __('Company') }}</th>
-                            <th >{{ __('Number') }}</th>
-                            <th >{{ __('Email') }}</th>
-                            <th tabulator-formatter="html">Actions</th>
+                            <th >{{ __('Phone Number') }}</th>
+                            <th >{{ __('E-Mail Address') }}</th>
+                            <th tabulator-formatter="html">{{ __('Actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>

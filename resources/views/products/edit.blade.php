@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Update a Product') }}
+                <div class="card-header">{{ __('Update Product') }}
                     <a class="float-right" href="{{ route('product.index') }}">{{ __('Back') }}</a>
                 </div>
                     <div class="card-body">
@@ -30,10 +30,6 @@
                             <div class="form-group">
                                 <label for="description">{{ __('Description') }}</label>
                                 <input type="text" class="form-control" name="description" value="{{ $product->description }}" />
-                            </div>
-                            <div class="form-group">
-                                <label for="weight">{{ __('Weight') }}</label>
-                                <input type="text" class="form-control" name="weight" value="{{ $product->weight }}" />
                             </div>
                             <div class="form-group">
                                 <label for="price">{{ __('Price') }}</label>

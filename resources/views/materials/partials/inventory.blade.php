@@ -32,7 +32,7 @@
     <tr>
         <th >{{ __('Date of Entry') }}</th>
         <th >{{ __('Quantity') }}</th>
-        <th >{{ __('Note') }}</th>
+        <th >{{ __('Notes') }}</th>
     </tr>
     </thead>
     <tbody>

@@ -1,10 +1,10 @@
 @extends('home')@section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-sm-12">  
+        <div class="col-sm-12">
             @if(session()->get('success'))
                 <div class="alert alert-success">
-                    {{ session()->get('success') }}  
+                    {{ session()->get('success') }}
                 </div>
             @endif
         </div>
@@ -18,7 +18,7 @@
                             <th >{{ __('Name') }}</th>
                             <th >{{ __('SKU') }}</th>
                             <th >{{ __('Description') }}</th>
-                            <th tabulator-formatter="html">Actions</th>
+                            <th tabulator-formatter="html">{{ __('Acciones') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,8 +34,8 @@
                                 <span>
                                   <a href="{{ route('product.edit',$products->id)}}" class="btn btn-link">{{ __('Edit') }}</a>
                                 </span>
-                                
-                                <span>                                  
+
+                                <span>
                                   <button class="btn btn-link" type="submit">{{ __('Delete') }}</button>
                                 </span>
                               </form>
