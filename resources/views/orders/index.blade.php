@@ -35,7 +35,7 @@
                                     {{ __('Paid') }}
                                 @endif
                                 @if($orders->status == 2)
-                                    {{ __('In Progress') }}
+                                    {{ __('In progress') }}
                                 @endif
                                 @if($orders->status == 3)
                                     {{ __('Done') }}
