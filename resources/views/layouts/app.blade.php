@@ -101,7 +101,7 @@
                                 <span class="sr-only"></span>
                               </button>
                               <div class="dropdown-menu dropdown-menu-right">
-                                <button class="dropdown-item" onclick="location.href='{{ url('home/production/create') }}'" type="button">{{ __('Add Production') }}</button>
+                                <button class="dropdown-item" onclick="location.href='{{ url('home/production/create') }}'" type="button">{{ __('Create Production') }}</button>
                                 <button class="dropdown-item" onclick="location.href='{{ url('home/client/create') }}'" type="button">{{ __('Add Client') }}</button>
                                 <button class="dropdown-item" onclick="location.href='{{ url('home/product/create') }}'" type="button">{{ __('Add Product') }}</button>
                               </div>

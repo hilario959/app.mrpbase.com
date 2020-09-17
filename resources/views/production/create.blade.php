@@ -25,7 +25,7 @@
                 <div class="col-md-12 form-group">
                     <div class="row">
                         <div class="col">
-                            <label for="start_at">{{ __('Start date') }}</label>
+                            <label for="start_at">{{ __('Start Date') }}</label>
                             <div class="input-group datetimepicker datetimepicker-input" id="dt1" data-target-input="nearest">
                                 <input type="text" class="form-control datetimepicker-input" data-target="#dt1"
                                        name="start_at" id="start_at" required
@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         <div class="col">
-                            <label for="end_at">{{ __('End date') }}</label>
+                            <label for="end_at">{{ __('End Date') }}</label>
                             <div class="input-group datetimepicker datetimepicker-input" id="dt2" data-target-input="nearest">
                                 <input type="text" class="form-control datetimepicker-input" data-target="#dt2"
                                        name="end_at" id="end_at" required

@@ -24,12 +24,12 @@
 <div class="jumbotron text-center bg-light jumbotron-fluid">
     <div class="container">
         <h2 class="text-primary"><i class="fas fa-industry"></i> mrpbase</h2>
-        <h1 class="display-4">Take Control of Your Manufacturing</h1>
-        <p class="lead">The simplest, yet smartest, self-service manufacturing software for your business.</p>
+        <h1 class="display-4">{{ __('Take Control of Your Manufacturing') }}</h1>
+        <p class="lead">{{ __('The simplest, yet smartest, self-service manufacturing software for your business.') }}</p>
         @guest
         <div>
             <button class="btn btn-primary btn-lg px-3 my-2" onclick="location.href='{{ url('register') }}'">{{ __('Register') }}</button>
-            <button class="btn btn-seconday btn-lg px-3 my-2" onclick="location.href='{{ url('login') }}'">{{ __('Log In') }}</button>
+            <button class="btn btn-seconday btn-lg px-3 my-2" onclick="location.href='{{ url('login') }}'">{{ __('Login') }}</button>
         </div>
         @endguest
         @auth
@@ -45,8 +45,8 @@
             <div class="card text-white bg-success mb-3">
                 <div class="card-body">
                     <i class="fas fa-list text-light"></i>
-                    <h3 class="text-light pt-3">Control your orders</h3>
-                    <p class="text-light">Improve customer satisfaction, shorten lead times and ship promptly.</p>
+                    <h3 class="text-light pt-3">{{ __('Control your orders') }}</h3>
+                    <p class="text-light">{{ __('Improve customer satisfaction, shorten lead times and ship promptly.') }}</p>
                 </div>
             </div>
         </div>
@@ -54,8 +54,8 @@
             <div class="card text-white bg-primary mb-3">
                 <div class="card-body">
                     <i class="fas fa-users text-light"></i>
-                    <h3 class="text-light pt-3">Manage your clients</h3>
-                    <p class="text-light">Manage your contacts easily, No more spreadsheets! </p>
+                    <h3 class="text-light pt-3">{{ __('Manage your clients') }}</h3>
+                    <p class="text-light">{{ __('Manage your contacts easily, No more spreadsheets!') }}</p>
                 </div>
             </div>
         </div>
@@ -63,8 +63,8 @@
             <div class="card text-white bg-danger mb-3">
                 <div class="card-body">
                     <i class="fas fa-box text-light"></i>
-                    <h3 class="text-light pt-3">Plan your productions</h3>
-                    <p class="text-light">Benefit from accurate automatic planning and a realistic production schedule. </p>
+                    <h3 class="text-light pt-3">{{ __('Plan your productions') }}</h3>
+                    <p class="text-light">{{ __('Benefit from accurate automatic planning and a realistic production schedule.') }}</p>
                 </div>
             </div>
         </div>

@@ -16,7 +16,7 @@
             <ul class="nav nav-pills mb-5" id="pills-tab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="pills-products-tab" data-toggle="pill" href="#pills-products" role="tab">
-                        {{ __('Update material') }}
+                        {{ __('Update Material') }}
                     </a>
                 </li>
                 <li class="nav-item">

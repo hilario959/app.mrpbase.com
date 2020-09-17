@@ -18,7 +18,7 @@
                         @endif
                         <form method="post" action="{{ route('client.store') }}">
                             @csrf
-                            <div class="form-group">    
+                            <div class="form-group">
                                 <label for="first_name">{{ __('First Name') }}</label>
                                 <input type="text" class="form-control" name="first_name"/>
                             </div>          <div class="form-group">
@@ -29,11 +29,11 @@
                                 <input type="text" class="form-control" name="company"/>
                             </div>
                             <div class="form-group">
-                                <label for="city">{{ __('Email') }}</label>
+                                <label for="city">{{ __('E-Mail Address') }}</label>
                                 <input type="text" class="form-control" name="email"/>
                             </div>
                             <div class="form-group">
-                                <label for="city">{{ __('Number') }}</label>
+                                <label for="city">{{ __('Phone Number') }}</label>
                                 <input type="text" class="form-control" name="number"/>
                             </div>
                             <div class="form-group">
@@ -43,11 +43,11 @@
                             <div class="form-group">
                                 <label for="job_title">{{ __('Tax ID') }}</label>
                                 <input type="text" class="form-control" name="tax_id"/>
-                            </div>    
+                            </div>
                             <div class="form-group">
                                 <label for="job_title">{{ __('Notes') }}</label>
                                 <input type="text" class="form-control" name="notes"/>
-                            </div>                      
+                            </div>
                             <button class="btn btn-link" type="submit">{{ __('Add Client') }}</button>
                         </form>
                     </div>

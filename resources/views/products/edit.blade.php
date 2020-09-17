@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Update a Product') }}
+                <div class="card-header">{{ __('Update Product') }}
                     <a class="float-right" href="{{ route('product.index') }}">{{ __('Back') }}</a>
                 </div>
                     <div class="card-body">
