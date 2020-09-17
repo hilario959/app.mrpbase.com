@@ -17,26 +17,26 @@
                         </div><br />
                         @endif
                         <form method="post" action="{{ route('client.update', $client->id) }}">
-                            @method('PATCH') 
+                            @method('PATCH')
                             @csrf
-                            <div class="form-group">    
+                            <div class="form-group">
                                 <label for="first_name">{{ __('First Name') }}</label>
                                 <input type="text" class="form-control" name="first_name" value='{{ $client->first_name }}' />
-                            </div>         
+                            </div>
                             <div class="form-group">
                                 <label for="last_name">{{ __('Last Name') }}</label>
                                 <input type="text" class="form-control" name="last_name" value='{{ $client->last_name }}' />
-                            </div>          
+                            </div>
                             <div class="form-group">
                                 <label for="email">{{ __('Company') }}</label>
                                 <input type="text" class="form-control" name="company" value='{{ $client->company }}' />
                             </div>
                             <div class="form-group">
-                                <label for="city">{{ __('Email') }}</label>
+                                <label for="city">{{ __('E-mail Address') }}</label>
                                 <input type="text" class="form-control" name="email" value='{{ $client->email }}' />
                             </div>
                             <div class="form-group">
-                                <label for="city">{{ __('Number') }}</label>
+                                <label for="city">{{ __('Phone Number') }}</label>
                                 <input type="text" class="form-control" name="number" value='{{ $client->number }}' />
                             </div>
                             <div class="form-group">
@@ -46,12 +46,12 @@
                             <div class="form-group">
                                 <label for="job_title">{{ __('Tax ID') }}</label>
                                 <input type="text" class="form-control" name="tax_id" value='{{ $client->tax_id }}' />
-                            </div>    
+                            </div>
                             <div class="form-group">
                                 <label for="job_title">{{ __('Notes') }}</label>
                                 <input type="text" class="form-control" name="notes" value='{{ $client->notes }}' />
-                            </div>                      
-                            <button type="submit" class="btn btn-link">{{ __('Update client') }}</button>
+                            </div>
+                            <button type="submit" class="btn btn-link">{{ __('Update Client') }}</button>
                         </form>
                     </div>
                 </div>

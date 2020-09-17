@@ -3,9 +3,9 @@
         <thead>
         <tr>
             <th tabulator-formatter="html">{{ __('Order') }}</th>
-            <th>{{ __('Client name') }}</th>
-            <th>{{ __('Start production date') }}</th>
-            <th>{{ __('End production date') }}</th>
+            <th>{{ __('Client') }}</th>
+            <th>{{ __('Start Date') }}</th>
+            <th>{{ __('End Date') }}</th>
             <th tabulator-formatter="html">{{ __('Actions') }}</th>
         </tr>
         </thead>

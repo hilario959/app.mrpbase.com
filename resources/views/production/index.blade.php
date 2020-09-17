@@ -11,16 +11,16 @@
                 @endif
             </div>
             <div class="col-md-12" >
-                <h3 class="my-3">{{ __('Production') }}</h3>
+                <h3 class="my-3">{{ __('Productions') }}</h3>
                 <a class="btn btn-primary float-right mb-3" href="{{ route('production.create') }}">{{ __('Add Production') }}</a>
                 <div class="table-responsive">
                     <table id="tabulator" class="table table-light table-striped border rounded">
                         <thead>
                             <tr>
                                 <th >{{ __('Code') }}</th>
-                                <th >{{ __('Start date') }}</th>
-                                <th >{{ __('End date') }}</th>
-                                <th tabulator-formatter="html">Actions</th>
+                                <th >{{ __('Start Date') }}</th>
+                                <th >{{ __('End Date') }}</th>
+                                <th tabulator-formatter="html">{{ __('Actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
