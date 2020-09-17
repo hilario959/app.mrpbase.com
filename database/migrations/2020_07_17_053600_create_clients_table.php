@@ -21,9 +21,9 @@ class CreateClientsTable extends Migration
             $table->string('company');
             $table->string('email');
             $table->string('number');
-            $table->string('address'); 
-            $table->string('tax_id'); 
-            $table->text('notes'); 
+            $table->string('address');
+            $table->string('tax_id');
+            $table->text('notes')->nullable();;
         });
     }
 
