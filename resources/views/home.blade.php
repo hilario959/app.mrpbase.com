@@ -6,7 +6,7 @@
         <div class="col-4">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h4 class="card-title font-weight-bold">{{ __('Orders received') }} </h4>
+                    <h4 class="card-title font-weight-bold">{{ __('Orders Received') }} </h4>
                     <p class="card-text text-primary">
                         <i class="fas fa-angle-double-down fa-2x"></i>
                         <span class="ml-2" style="font-size: 30px;">{{ $ordersReceived }}</span>
@@ -17,7 +17,7 @@
         <div class="col-4">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h4 class="card-title font-weight-bold">{{ __('Orders in progress') }} </h4>
+                    <h4 class="card-title font-weight-bold">{{ __('Orders In Progress') }} </h4>
                     <p class="card-text text-warning">
                         <i class="fas fa-spinner fa-2x"></i>
                         <span class="ml-2" style="font-size: 30px;">{{ $ordersInProgress }}</span>
@@ -28,7 +28,7 @@
         <div class="col-4">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h4 class="card-title font-weight-bold">{{ __('Orders done') }} </h4>
+                    <h4 class="card-title font-weight-bold">{{ __('Orders Done') }} </h4>
                     <p class="card-text text-success">
                         <i class="fas fa-check fa-2x"></i>
                         <span class="ml-2" style="font-size: 30px;">{{ $ordersDone }}</span>
@@ -39,12 +39,12 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-12 mt-2">
-            <h3 class="font-weight-bold">{{ __('Materials left') }}</h3>
+            <h3 class="font-weight-bold">{{ __('Remaining Materials') }}</h3>
             <table id="tabulator" class="table table-light table-striped border rounded">
                 <thead>
                 <tr>
                     <th>{{ __('Name') }}</th>
-                    <th tabulator-formatter="html">{{ __('Amount') }}</th>
+                    <th tabulator-formatter="html">{{ __('Quantity (In Kgs)') }}</th>
                 </tr>
                 </thead>
                 <tbody>
