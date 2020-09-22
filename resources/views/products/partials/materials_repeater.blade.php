@@ -13,7 +13,7 @@
         </select>
     </td>
     <td class="align-middle">
-        <input type="number" class="form-control" step="0.1"
+        <input type="number" class="form-control" step="0.0001"
                name="materials[{{ $item->id ?? $k }}][quantity]"
                value="{{ $item->pivot->quantity ?? 0 }}" {{ isset($placeholder) ? 'disabled' : '' }}>
     </td>
