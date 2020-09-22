@@ -11,7 +11,7 @@
                 </div>
                 <div class="col">
                     <label for="notes">{{ __('Quantity (In Kgs)') }}</label>
-                    <input type="number" class="form-control" name="quantity"/>
+                    <input type="number" step="0.0001" class="form-control" name="quantity"/>
                 </div>
             </div>
             <div class="form-group">
