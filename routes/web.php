@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('home');
 });
 
 Auth::routes();
@@ -36,3 +36,4 @@ Route::group(['middleware' => 'auth'], function () {
         Route::any('production/view', 'ProductionController@view')->name('view');
     });
 });
+
