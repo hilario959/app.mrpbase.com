@@ -89,9 +89,10 @@ class ProductionController extends Controller
                 ->whereIn('product_id', array_column($requestData['products'], 'product_id'))
                 ->get();
 
-            $materials = $materialProduct->mapWithKeys(function ($item) use ($productsQuantity) {
-                return [$item->material_id => $item->quantity * $productsQuantity[$item->product_id]];
-            });
+            $materials = [];
+            foreach ($materialProduct as $key => $item) {
+                $materials[$item->material_id] = ($materials[$item->material_id] ?? 0) + $item->quantity * $productsQuantity[$item->product_id];
+            }
 
             foreach ($materials as $id => $quantity) {
                 Inventory::create([
@@ -221,9 +222,10 @@ class ProductionController extends Controller
                 ->whereIn('product_id', array_column($requestData['products'], 'product_id'))
                 ->get();
 
-            $materials = $materialProduct->mapWithKeys(function ($item) use ($productsQuantity) {
-                return [$item->material_id => $item->quantity * $productsQuantity[$item->product_id]];
-            });
+            $materials = [];
+            foreach ($materialProduct as $key => $item) {
+                $materials[$item->material_id] = ($materials[$item->material_id] ?? 0) + $item->quantity * $productsQuantity[$item->product_id];
+            }
 
             foreach ($materials as $id => $quantity) {
                 Inventory::create([
